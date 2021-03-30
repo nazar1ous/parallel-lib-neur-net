@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.15)
-project(adder
+project(parallel_neural_net_lib
         VERSION 1.0.0
-        DESCRIPTION "Add two numbers"
-        HOMEPAGE_URL "https://github.com/ucu-computer-systems/cpp-template"
+        DESCRIPTION "Library"
+        HOMEPAGE_URL "https://github.com/nazar1ous/parallel-lib-neur-net"
         LANGUAGES C CXX)
 
 set(CMAKE_C_STANDARD 11)
@@ -15,20 +15,20 @@ option(ENABLE_PVS_STUDIO    "Use PVS-Studio static code analyzer."  OFF) # Optio
 option(ENABLE_SANITIZERS    "Use sanitizers to detect errors."      OFF) # Option for the test builds. Do not use it in the production builds.
 
 # Project source compilation
-include_directories(inc)
-add_library(arithmetic STATIC
-            src/arithmetic/arithmetic.cpp inc/arithmetic/arithmetic.hpp)
-add_executable(add src/main.cpp)
-target_link_libraries(add arithmetic)
+include_directories(inc/eigen-3.3.9 inc src inc/nn_core)
+add_library(layers STATIC inc/nn_core/dnn_layer.hpp src/nn_core/dnn_layer.cpp inc/nn_core/dnn_model.hpp src/nn_core/dnn_model.cpp inc/nn_core/optimizers.hpp src/nn_core/optimizers.cpp)
+add_executable(parallel_neural_net_lib src/main.cpp inc/nn_core/dnn_layer.hpp src/nn_core/dnn_layer.cpp)
+target_link_libraries(parallel_neural_net_lib layers)
+
 
 # Add external packages
 set(Boost_USE_STATIC_LIBS ON)
 find_package(Boost 1.71.0 COMPONENTS program_options REQUIRED)
 include_directories(${Boost_INCLUDE_DIR})
-target_link_libraries(add Boost::program_options)
+target_link_libraries(parallel_neural_net_lib Boost::program_options)
 
 # Define ALL_TARGETS variable to use in some directives
-set(ALL_TARGETS arithmetic add)
+set(ALL_TARGETS layers parallel_neural_net_lib)
 
 # Include default CMake configuration
 include(cmake/Config.cmake)
