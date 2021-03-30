@@ -15,10 +15,10 @@ option(ENABLE_PVS_STUDIO    "Use PVS-Studio static code analyzer."  OFF) # Optio
 option(ENABLE_SANITIZERS    "Use sanitizers to detect errors."      OFF) # Option for the test builds. Do not use it in the production builds.
 
 # Project source compilation
-include_directories(inc/eigen-3.3.9 inc src inc/nn_core)
-add_library(layers STATIC inc/nn_core/dnn_layer.hpp src/nn_core/dnn_layer.cpp inc/nn_core/dnn_model.hpp src/nn_core/dnn_model.cpp inc/nn_core/optimizers.hpp src/nn_core/optimizers.cpp)
-add_executable(parallel_neural_net_lib src/main.cpp inc/nn_core/dnn_layer.hpp src/nn_core/dnn_layer.cpp)
-target_link_libraries(parallel_neural_net_lib layers)
+include_directories(inc/eigen-3.3.9 inc src)
+#add_library(layers STATIC inc/dnn_layer.hpp src/dnn_layer.cpp inc/dnn_model.hpp src/dnn_model.cpp inc/optimizers.hpp src/optimizers.cpp)
+add_executable(parallel_neural_net_lib src/main.cpp src/dnn_layer.cpp src/dnn_model.cpp src/optimizers.cpp)
+#target_link_libraries(parallel_neural_net_lib layers)
 
 
 # Add external packages
@@ -28,7 +28,7 @@ include_directories(${Boost_INCLUDE_DIR})
 target_link_libraries(parallel_neural_net_lib Boost::program_options)
 
 # Define ALL_TARGETS variable to use in some directives
-set(ALL_TARGETS layers parallel_neural_net_lib)
+#set(ALL_TARGETS layers parallel_neural_net_lib)
 
 # Include default CMake configuration
 include(cmake/Config.cmake)

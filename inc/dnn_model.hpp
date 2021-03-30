@@ -6,7 +6,7 @@
 #define PARALLEL_NEURAL_NET_LIB_DNN_MODEL_HPP
 #include <iostream>
 #include <vector>
-#include "../inc/nn_core/dnn_layer.hpp"
+#include "dnn_layer.hpp"
 
 template<typename T>
 class DNNModel{

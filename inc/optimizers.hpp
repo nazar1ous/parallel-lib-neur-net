@@ -1,7 +1,7 @@
 //
 // Created by nazariikuspys on 3/30/21.
 //
-#include "../inc/nn_core/dnn_layer.hpp"
+#include "dnn_layer.hpp"
 
 #ifndef PARALLEL_NEURAL_NET_LIB_OPTIMIZERS_HPP
 #define PARALLEL_NEURAL_NET_LIB_OPTIMIZERS_HPP

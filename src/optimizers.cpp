@@ -1,7 +1,7 @@
 //
 // Created by nazariikuspys on 3/30/21.
 //
-#include <../inc/nn_core/optimizers.hpp>
+#include <optimizers.hpp>
 
 template<typename T>
 void Optimizer<T>::update_parameters(std::vector<DNNLayer<T>> layers) {

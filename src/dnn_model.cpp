@@ -1,5 +1,5 @@
 
-#include "../inc/nn_core/dnn_model.hpp"
+#include "dnn_model.hpp"
 template<typename T>
 void DNNModel<T>::propagate_forward() {
     for (const auto &l: layers){

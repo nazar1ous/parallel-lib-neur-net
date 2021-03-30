@@ -3,9 +3,7 @@
 #include <omp.h>
 #include <bits/stdc++.h>
 #include <Eigen/Dense>
-//#include "../inc/nn_core/dnn_model.hpp"
-#include "../inc/nn_core/dnn_layer.hpp"
-//#include "../src/nn_core/dnn_layer.cpp"
+#include "dnn_layer.hpp"
 
 
 
@@ -13,9 +11,10 @@
 
 
 int main(int argc, char **argv) {
+//    DNNLayer<double>(5, "sigmoid");
     auto l = new DNNLayer<double>(5, "sigmoid");
     l->init_weights(5);
-    std::cout << l->W << std:: endl;
+//    std::cout << l->W << std:: endl;
 //    l->dW *= 5;
 //    auto model = DNNModel<double>(2);
 
