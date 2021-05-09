@@ -16,7 +16,8 @@ public:
         this->hparams = std::ref(hparams);
     }
 
-    virtual inline void update_parameters(MatrixTx* W, MatrixTx* b) = 0;
+    virtual inline void update_parameters(MatrixTx* W, MatrixTx* b,
+                                          const std::unordered_map<std::string, MatrixTx>& cache) = 0;
 };
 
 template<typename T>
@@ -24,12 +25,13 @@ class GDOptimizer: private BasicOptimizer<T>{
     typedef Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> MatrixTx;
 public:
     std::string type = "gd";
-    void update_parameters(MatrixTx* W, MatrixTx* b) override{
+    void update_parameters(MatrixTx* W, MatrixTx* b,
+                           const std::unordered_map<std::string, MatrixTx>& cache) override{
         if (!this->hparams.find("alpha")){
             std::cerr << "There is no alpha param for GD optimizer\n";
         }
-        *W = *W - this->hparams["alpha"];
-        *b = *b - this->hparams["alpha"];
+        *W = *W - this->hparams["alpha"]*cache["dW"];
+        *b = *b - this->hparams["alpha"]*cache["db"];
     };
 
 };
@@ -62,7 +64,8 @@ public:
         builder();
     }
 
-    void update_parameters(MatrixTx* W, MatrixTx* b) override{
-        return wrapper.update_parameters(W, b);
+    void update_parameters(MatrixTx* W, MatrixTx* b,
+                           const std::unordered_map<std::string, MatrixTx>& cache) override{
+        return wrapper.update_parameters(W, b, cache);
     }
 };
