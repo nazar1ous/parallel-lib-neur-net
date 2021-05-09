@@ -35,10 +35,10 @@ class Linear: public Activation<T>{
     typedef Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> MatrixTx;
 public:
     std::string type = "linear";
-    inline MatrixTx activate_forward(const MatrixTx& x) override{
+    MatrixTx activate_forward(const MatrixTx& x) override{
         return std::copy(x);
     }
-    inline MatrixTx activate_backward(const MatrixTx& dA, const MatrixTx& Z) override{
+    MatrixTx activate_backward(const MatrixTx& dA, const MatrixTx& Z) override{
         return std::copy(dA);
     }
 };
@@ -48,10 +48,10 @@ class ReLu: public Activation<T>{
     typedef Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> MatrixTx;
 public:
     std::string type = "relu";
-    inline MatrixTx activate_forward(const MatrixTx& x) override{
+    MatrixTx activate_forward(const MatrixTx& x) override{
         return x.array().cwiseMax(T(0));
     }
-    inline MatrixTx activate_backward(const MatrixTx& dA, const MatrixTx& Z) override{
+    MatrixTx activate_backward(const MatrixTx& dA, const MatrixTx& Z) override{
         return dA.array() * Z.unaryExpr([](T y){return (T)(y>0);});
     }
 };
@@ -61,10 +61,10 @@ class Tanh: public Activation<T>{
     typedef Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> MatrixTx;
 public:
     std::string type = "tanh";
-    inline MatrixTx activate_forward(const MatrixTx& x) override{
+    MatrixTx activate_forward(const MatrixTx& x) override{
         return x.array().tanh();
     }
-    inline MatrixTx activate_backward(const MatrixTx& dA, const MatrixTx& Z) override{
+    MatrixTx activate_backward(const MatrixTx& dA, const MatrixTx& Z) override{
         return dA.array() * (T(1) - Z.array().tanh().square());
     }
 };
