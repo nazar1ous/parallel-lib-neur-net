@@ -1,6 +1,5 @@
 #include <iostream>
 #include "layers/fc_layer.h"
-#include "layers/optimizers.h"
 
 template<typename T>
 class Model{

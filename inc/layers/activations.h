@@ -2,6 +2,7 @@
 #define PARALLEL_NEURAL_NET_LIB_ACTIVATIONS_H
 #include <Eigen/Core>
 #include <Eigen/Dense>
+#include <boost/algorithm/string.hpp>
 
 
 template<typename T>
@@ -20,10 +21,10 @@ class Sigmoid: public Activation<T>{
     typedef Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> MatrixTx;
 public:
     std::string type = "sigmoid";
-    inline MatrixTx activate_forward(const MatrixTx& x) override{
+    MatrixTx activate_forward(const MatrixTx& x) override{
         return T(1) / ((-x.array()).exp() + T(1));
     }
-    inline MatrixTx activate_backward(const MatrixTx& dA, const MatrixTx& Z) override{
+    MatrixTx activate_backward(const MatrixTx& dA, const MatrixTx& Z) override{
         auto s = activate_forward(Z);
         return dA.array() * s.array() * (T(1) - s.array());
     }
@@ -36,10 +37,10 @@ class Linear: public Activation<T>{
 public:
     std::string type = "linear";
     MatrixTx activate_forward(const MatrixTx& x) override{
-        return std::copy(x);
+        return MatrixTx (x);
     }
     MatrixTx activate_backward(const MatrixTx& dA, const MatrixTx& Z) override{
-        return std::copy(dA);
+        return MatrixTx (dA);
     }
 };
 
@@ -52,7 +53,7 @@ public:
         return x.array().cwiseMax(T(0));
     }
     MatrixTx activate_backward(const MatrixTx& dA, const MatrixTx& Z) override{
-        return dA.array() * Z.unaryExpr([](T y){return (T)(y>0);});
+        return dA.array() * Z.unaryExpr([](T y){return (T)(y>0);}).array();
     }
 };
 
@@ -74,17 +75,18 @@ template<typename T>
 class ActivationWrapper: public Activation<T>{
     typedef Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> MatrixTx;
 private:
-    Activation<T> wrapper;
+    Activation<T> *wrapper;
     void builder(){
-        auto value = std::tolower(this->type);
+        auto value = boost::to_lower_copy(this->type);
+
         if (value == "sigmoid"){
-            wrapper = Sigmoid<T>{};
+            wrapper = new Sigmoid<T>{};
         }else if (value == "relu"){
-            wrapper = ReLu<T>{};
+            wrapper = new ReLu<T>{};
         }else if (value == "linear"){
-            wrapper = Linear<T>{};
+            wrapper = new Linear<T>{};
         }else if (value == "tanh") {
-            wrapper = Tanh<T>{};
+            wrapper = new Tanh<T>{};
         }else{
                 std::cerr << "Not implemented type of activation";
             }
@@ -94,13 +96,13 @@ public:
         this->type = type;
         builder();
     }
-    inline MatrixTx activate_forward(const MatrixTx& x) override {
-        return wrapper.activate_forward(x);
+    MatrixTx activate_forward(const MatrixTx& x) override {
+        return wrapper->activate_forward(x);
     }
 
-    inline MatrixTx activate_backward(const MatrixTx& dA,
+    MatrixTx activate_backward(const MatrixTx& dA,
                                       const MatrixTx& Z) override {
-        return wrapper.activate_backward(dA, Z);
+        return wrapper->activate_backward(dA, Z);
     }
 
 };

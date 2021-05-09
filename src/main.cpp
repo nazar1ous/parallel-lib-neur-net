@@ -3,16 +3,18 @@
 #include <omp.h>
 //#include <bits/stdc++.h>
 #include <Eigen/Dense>
-#include "layers/fc_layer.h"
-#include "layers/activations.h"
+#include "models/dnn_model.h"
 
 
 
 
 
 int main(int argc, char **argv) {
-    std::map<std::string, int> m = {std::pair{"shit", 2},
-                                    std::pair{"gavno", 3}};
-    std::cout << m["gavno"];
+    std::unordered_map<std::string, double> m;
+    m["alpha"] = 0.1;
+    auto l = new FCLayer<double>(5, 5, "gd", "sigmoid", m);
+    std::cout << l->input_size;
+    std::cout << l->optimizer->hparams["alpha"];
+    std::cout << l->activation->type;
 
 }
