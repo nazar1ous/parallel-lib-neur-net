@@ -16,13 +16,12 @@ option(ENABLE_SANITIZERS    "Use sanitizers to detect errors."      OFF) # Optio
 
 # Project source compilation
 include_directories(inc/eigen-3.3.9 inc src)
-add_library(layers STATIC inc/layers/fc_layer.h src/layers/fc_layer.cpp inc/layers/activations.h
-        inc/layers/optimizers.h)
-add_library(models STATIC inc/models/dnn_model.h src/models/dnn_model.cpp)
+add_library(liba STATIC inc/layers/fc_layer.h src/layers/fc_layer.cpp inc/layers/activations.h
+        inc/layers/optimizers.h inc/models/dnn_model.h src/models/dnn_model.cpp)
+
 
 add_executable(parallel_neural_net_lib src/main.cpp)
-target_link_libraries(parallel_neural_net_lib layers)
-target_link_libraries(parallel_neural_net_lib models)
+target_link_libraries(parallel_neural_net_lib liba)
 
 
 
@@ -33,7 +32,7 @@ include_directories(${Boost_INCLUDE_DIR})
 target_link_libraries(parallel_neural_net_lib Boost::program_options)
 
 # Define ALL_TARGETS variable to use in some directives
-set(ALL_TARGETS layers parallel_neural_net_lib)
+set(ALL_TARGETS liba parallel_neural_net_lib)
 
 # Include default CMake configuration
 include(cmake/Config.cmake)

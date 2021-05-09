@@ -2,7 +2,6 @@
 #include <iostream>
 #include <Eigen/Dense>
 #include <cmath>
-//#include "fc_layer.h"
 #include "layers/activations.h"
 #include "layers/optimizers.h"
 #include <random>
@@ -42,7 +41,7 @@ public:
     }
 
     MatrixTx forward(const MatrixTx& X, std::unordered_map<std::string, MatrixTx>& cache){
-        cache["A_prev"] = X;
+        cache["A_prev"] = MatrixTx (X);
         auto Z = linear_forward(X);
         cache["Z"] = Z;
         return activation->activate_forward(Z);
@@ -53,7 +52,7 @@ public:
         return linear_backward(dZ, cache);
     }
 
-    void update_params(const std::unordered_map<std::string, MatrixTx>& cache){
+    void update_params(std::unordered_map<std::string, MatrixTx>& cache){
         optimizer->update_parameters(&W, &b, cache);
     }
 
