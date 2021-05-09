@@ -5,6 +5,8 @@
 //#include "fc_layer.h"
 #include "layers/activations.h"
 #include "layers/optimizers.h"
+#include <random>
+#include <ctime>
 
 
 template<typename T>
@@ -25,8 +27,7 @@ public:
         activation = new ActivationWrapper<T>{activation_type};
         this->input_size = input_size;
         this->output_size = output_size;
-        W.resize(output_size, input_size);
-        b.resize(output_size, 1);
+        initialize_parameters();
     }
 
     MatrixTx linear_forward(const MatrixTx& X){
@@ -54,6 +55,14 @@ public:
 
     void update_params(const std::unordered_map<std::string, MatrixTx>& cache){
         optimizer->update_parameters(&W, &b, cache);
+    }
+
+    void initialize_parameters(){
+        std::normal_distribution<T> dis(0, 1);
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        W = MatrixTx(output_size, input_size).unaryExpr([&](T dummy){return dis(gen);});
+        b = MatrixTx(output_size, 1).unaryExpr([&](T dummy){return dis(gen);});
     }
 
 
