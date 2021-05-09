@@ -78,13 +78,13 @@ private:
     void builder(){
         auto value = std::tolower(this->type);
         if (value == "sigmoid"){
-            wrapper = new Sigmoid<T>{};
+            wrapper = Sigmoid<T>{};
         }else if (value == "relu"){
-            wrapper = new ReLu<T>{};
+            wrapper = ReLu<T>{};
         }else if (value == "linear"){
-            wrapper = new Linear<T>{};
+            wrapper = Linear<T>{};
         }else if (value == "tanh") {
-            wrapper = new Tanh<T>{};
+            wrapper = Tanh<T>{};
         }else{
                 std::cerr << "Not implemented type of activation";
             }

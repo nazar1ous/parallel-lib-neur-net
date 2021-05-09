@@ -47,14 +47,14 @@ private:
 
 public:
     OptimizerWrapper(const std::string& type,
-                     std::unordered_map<std::string, T> hparams){
+                     std::unordered_map<std::string, T> hparams) override{
         this->hparams = hparams;
         this->type = type;
     }
 
     void builder(){
         if (type == "gd"){
-            wrapper = new GDOptimizer<T>(this->hparams);
+            wrapper = GDOptimizer<T>{this->hparams};
         }else{
             std::cerr << "Not implemented type of optimizer\n";
         }
