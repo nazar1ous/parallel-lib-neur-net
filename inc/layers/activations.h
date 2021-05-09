@@ -11,7 +11,8 @@ class Activation{
 public:
     std::string type;
     virtual inline MatrixTx activate_forward(const MatrixTx& x) = 0;
-    virtual inline MatrixTx activate_backward(const MatrixTx& x) = 0;
+    virtual inline MatrixTx activate_backward(const MatrixTx& dA,
+                                              const MatrixTx& Z) = 0;
 };
 
 template<typename T>
@@ -22,10 +23,9 @@ public:
     inline MatrixTx activate_forward(const MatrixTx& x) override{
         return T(1) / ((-x.array()).exp() + T(1));
     }
-    inline MatrixTx activate_backward(const MatrixTx& x) override{
-        // TODO check for gv != x?
-        auto gv = activate_forward(x);
-        return gv.array() * (T(1) - gv.array());
+    inline MatrixTx activate_backward(const MatrixTx& dA, const MatrixTx& Z) override{
+        auto s = activate_forward(Z);
+        return dA.array() * s.array() * (T(1) - s.array());
     }
 };
 
@@ -38,8 +38,8 @@ public:
     inline MatrixTx activate_forward(const MatrixTx& x) override{
         return std::copy(x);
     }
-    inline MatrixTx activate_backward(const MatrixTx& x) override{
-        return std::copy(x);
+    inline MatrixTx activate_backward(const MatrixTx& dA, const MatrixTx& Z) override{
+        return std::copy(dA);
     }
 };
 
@@ -51,10 +51,24 @@ public:
     inline MatrixTx activate_forward(const MatrixTx& x) override{
         return x.array().cwiseMax(T(0));
     }
-    inline MatrixTx activate_backward(const MatrixTx& x) override{
-        return x.unaryExpr([](T y){return (T)(y>0);});
+    inline MatrixTx activate_backward(const MatrixTx& dA, const MatrixTx& Z) override{
+        return dA.array() * Z.unaryExpr([](T y){return (T)(y>0);});
     }
 };
+
+template<typename T>
+class Tanh: public Activation<T>{
+    typedef Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> MatrixTx;
+public:
+    std::string type = "tanh";
+    inline MatrixTx activate_forward(const MatrixTx& x) override{
+        return x.array().tanh();
+    }
+    inline MatrixTx activate_backward(const MatrixTx& dA, const MatrixTx& Z) override{
+        return dA.array() * (T(1) - Z.array().tanh().square());
+    }
+};
+
 
 template<typename T>
 class ActivationWrapper: public Activation<T>{
@@ -69,9 +83,11 @@ private:
             wrapper = new ReLu<T>{};
         }else if (value == "linear"){
             wrapper = new Linear<T>{};
+        }else if (value == "tanh") {
+            wrapper = new Tanh<T>{};
         }else{
-            std::cerr << "Not implemented type of activation";
-        }
+                std::cerr << "Not implemented type of activation";
+            }
     }
 public:
     explicit ActivationWrapper(const std::string& type){
@@ -82,8 +98,9 @@ public:
         return wrapper.activate_forward(x);
     }
 
-    inline MatrixTx activate_backward(const MatrixTx& x) override {
-        return wrapper.activate_backward(x);
+    inline MatrixTx activate_backward(const MatrixTx& dA,
+                                      const MatrixTx& Z) override {
+        return wrapper.activate_backward(dA, Z);
     }
 
 };
