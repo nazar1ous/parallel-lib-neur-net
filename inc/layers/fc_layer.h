@@ -9,16 +9,16 @@
 #include <unordered_map>
 
 
-md HStack(const md& d, int m) {
-    int rows_n = d.rows();
-    md vstacked_mat(rows_n, m);
-    int col_offset = 0;
-    for (int i = 0; i < m; ++i) {
-        vstacked_mat.middleCols(col_offset, 1) = d;
-        col_offset +=  1;
-    }
-    return vstacked_mat;
-}
+//md HStack(const md& d, int m) {
+//    int rows_n = d.rows();
+//    md vstacked_mat(rows_n, m);
+//    int col_offset = 0;
+//    for (int i = 0; i < m; ++i) {
+//        vstacked_mat.middleCols(col_offset, 1) = d;
+//        col_offset +=  1;
+//    }
+//    return vstacked_mat;
+//}
 
 
 
@@ -42,7 +42,9 @@ public:
     }
 
     md linear_forward(const md& X){
-        return W*X + HStack(b, 6000);
+        md temp = W*X;
+        temp.colwise() += b.col(0);
+        return temp;
     }
     md linear_backward(const md& dZ, std::unordered_map<std::string, md>& cache){
         auto m = dZ.cols();
