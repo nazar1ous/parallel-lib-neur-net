@@ -4,11 +4,10 @@
 //#include <bits/stdc++.h>
 #include <Eigen/Dense>
 #include "models/dnn_model.h"
+#include "layers/config.h"
 
 
-template<typename T>
 void test_fc_layer_basic(){
-    typedef Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> MatrixTx;
 
     std::unordered_map<std::string, double> m;
     m["alpha"] = 0.01;
@@ -24,13 +23,14 @@ void test_fc_layer_basic(){
     int n;
     std::cin >> n;
     double l, k;
-    auto X_train = MatrixTx (1, n);
-    auto Y_train = MatrixTx (1, n);
+    md X_train = md (1, n);
+    md Y_train = md (1, n);
 
     for (int i = 0; i < n; ++i){
         std::cin >> l >> k;
-        X_train(0, i) = l;
-        Y_train(0, i) = k;
+        X_train << l; Y_train << k;
+//        X_train(0, i) = l;
+//        Y_train(0, i) = k;
 
     }
     std::cout << X_train.cols() << X_train.rows();
@@ -53,6 +53,6 @@ void test_fc_layer_basic(){
 
 int main(int argc, char **argv) {
 
-    test_fc_layer_basic<double>();
+    test_fc_layer_basic();
 
 }

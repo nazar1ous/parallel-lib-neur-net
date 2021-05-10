@@ -1,5 +1,7 @@
 #include <iostream>
 #include "layers/fc_layer.h"
+#include <Eigen/Dense>
+#include "layers/config.h"
 
 template<typename T>
 class Model{
@@ -18,7 +20,8 @@ public:
 
     MatrixTx forward(const MatrixTx& X){
         // TODO fucking bug with code 136
-        MatrixTx Y(X);
+
+        MatrixTx Y = X.replicate(X.rows(), X.cols());
         //
         for (int i = 0; i < L; ++i){
             Y = layers[i]->forward(Y, caches[i]);

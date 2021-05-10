@@ -1,6 +1,5 @@
 #ifndef PARALLEL_NEURAL_NET_LIB_ACTIVATIONS_H
 #define PARALLEL_NEURAL_NET_LIB_ACTIVATIONS_H
-#include <Eigen/Core>
 #include <Eigen/Dense>
 #include <boost/algorithm/string.hpp>
 
