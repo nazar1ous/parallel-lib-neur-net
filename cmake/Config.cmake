@@ -1,6 +1,6 @@
 # Build release version if not specified otherwise.
 if (NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE Release)
+    set(CMAKE_BUILD_TYPE Debug)
 endif ()
 
 include(cmake/defaults/CompilerWarnings.cmake)
