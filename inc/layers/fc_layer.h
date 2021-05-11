@@ -76,6 +76,9 @@ public:
         std::mt19937 gen(rd());
         W = md(output_size, input_size).unaryExpr([&](double dummy){return dis(gen);});
         b = md(output_size, 1).unaryExpr([&](double dummy){return dis(gen);});
+//        std::cerr << W << std::endl;
+//        std::cerr << b << std::endl;
+
     }
 
 

@@ -4,16 +4,25 @@
 class Loss{
 public:
     std::string type;
-    virtual double inline get_loss(const md& AL, const md& Y) = 0;
-    virtual md inline get_loss_backward(const md& AL, const md& Y) = 0;
+    virtual inline md get_loss(const md& AL, const md& Y) = 0;
+    virtual inline md get_loss_backward(const md& AL, const md& Y) = 0;
+    double get_cost(const md& AL, const md& Y) {
+        return get_loss(AL, Y).colwise().sum().mean();
+    }
+
+    inline std::string get_type() const{
+        return type;
+    }
 };
 
 class MSE: public Loss{
 public:
-    type = "mse";
+    MSE(){
+        this->type = "mse";
+    }
 
-    double get_loss(const md& AL, const md& Y) override{
-        return (Y-AL).array().square().colwise().sum()/Y.cols();
+    md get_loss(const md& AL, const md& Y) override{
+        return (Y-AL).array().square();
     }
 
     md get_loss_backward(const md& AL, const md& Y) override{
@@ -24,21 +33,25 @@ public:
 
 class BinaryCrossEntropy: public Loss{
 public:
-    type = "binary_cross_entropy";
+    BinaryCrossEntropy(){
+        this->type = "binary_cross_entropy";
+    }
 
-    double get_loss(const md& AL, const md& Y) override{
+
+    md get_loss(const md& AL, const md& Y) override{
         return AL.array().log() * Y.array() + (1 - AL.array()).log() * (1 - Y.array());
     }
 
     md get_loss_backward(const md& AL, const md& Y) override{
         return - ((Y.array()/AL.array() - (1 - Y.array())/(1 - AL.array())));
     }
+
 };
 
 
 class LossWrapper: public Loss{
 private:
-    Loss* wrapper;
+    Loss *wrapper;
     void builder(){
         auto value = this->type;
         if (value == "mse"){
@@ -56,7 +69,7 @@ public:
         builder();
     }
 
-    double get_loss(const md& AL, const md& Y) override{
+    md get_loss(const md& AL, const md& Y) override{
         return wrapper->get_loss(AL, Y);
     }
 

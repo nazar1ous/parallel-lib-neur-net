@@ -18,15 +18,14 @@ void test_fc_layer_basic(){
 
     std::unordered_map<std::string, double> m;
     m["alpha"] = 0.01;
-    auto l1 = new FCLayer(1, 20, "gd", "relu", m);
-    auto l2 = new FCLayer(20, 10, "gd", "relu", m);
-    auto l3 = new FCLayer(10, 1, "gd", "sigmoid", m);
+    auto l1 = new FCLayer(1, 2, "gd", "relu", m);
+    auto l2 = new FCLayer(2, 1, "gd", "relu", m);
+//    auto l3 = new FCLayer(10, 1, "gd", "sigmoid", m);
     std::vector<FCLayer*> layers = {
             l1,
-            l2,
-            l3
+            l2
     };
-    auto model = new Model(layers);
+    auto model = new Model(layers, "mse");
     std::fstream in_file("/home/nazariikuspys/temp/data.txt");
     std::vector<double> v;
     read_file_to_vector(&v, &in_file);

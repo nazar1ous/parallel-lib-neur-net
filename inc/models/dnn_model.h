@@ -3,18 +3,22 @@
 #include <Eigen/Dense>
 #include "layers/config.h"
 #include <unordered_map>
+#include "layers/loss.h"
 
 class Model{
 public:
     size_t L;
     std::vector<FCLayer*> layers;
     std::vector<std::unordered_map<std::string, md>> caches;
+    LossWrapper* loss;
+
     // TODO probably put the optimizer here
     //  that is common to all layers
-    explicit Model(std::vector<FCLayer*>& layers){
+    Model(std::vector<FCLayer*>& layers, const std::string& loss_type){
         L = layers.size();
         this->layers = layers;
         this->caches = std::vector<std::unordered_map<std::string, md>>(L);
+        loss = new LossWrapper{loss_type};
     }
 
     md forward(const md& X){
@@ -25,9 +29,12 @@ public:
         return Y;
     }
 
+    double get_cost(const md& AL, const md& Y){
+        return loss->get_cost(AL, Y);
+    }
+
     void backward(const md& AL, const md& Y){
-        // TODO add different losses
-        md dA = - ((Y.array()/AL.array() - (1 - Y.array())/(1 - AL.array())));
+        md dA = loss->get_loss_backward(AL, Y);
         for (int i = L - 1; i >= 0; --i){
             // cache is updated
             dA = layers[i]->backward(dA, caches[i]);
@@ -46,6 +53,7 @@ public:
             auto AL = forward(X_train);
             backward(AL, Y_train);
             update_parameters();
+            std::cout << i << "-- " <<  get_cost(AL, Y_train) << std::endl;
         }
     }
 

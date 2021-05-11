@@ -17,7 +17,8 @@ option(ENABLE_SANITIZERS    "Use sanitizers to detect errors."      OFF) # Optio
 # Project source compilation
 include_directories(inc/eigen-3.3.9 inc src)
 add_library(liba STATIC inc/layers/fc_layer.h src/layers/fc_layer.cpp inc/layers/activations.h
-        inc/layers/optimizers.h inc/models/dnn_model.h src/models/dnn_model.cpp inc/layers/config.h)
+        inc/layers/optimizers.h inc/models/dnn_model.h src/models/dnn_model.cpp inc/layers/config.h
+        inc/layers/loss.h)
 
 
 add_executable(parallel_neural_net_lib src/main.cpp)
