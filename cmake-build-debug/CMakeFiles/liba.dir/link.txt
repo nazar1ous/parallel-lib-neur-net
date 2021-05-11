@@ -1,0 +1,2 @@
+/usr/bin/ar qc libliba.a CMakeFiles/liba.dir/src/layers/fc_layer.cpp.o CMakeFiles/liba.dir/src/models/dnn_model.cpp.o
+/usr/bin/ranlib libliba.a
