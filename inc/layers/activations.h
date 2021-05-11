@@ -20,7 +20,7 @@ public:
         return 1 / ((-x.array()).exp() + 1);
     }
     md activate_backward(const md& dA, const md& Z) override{
-        auto s = activate_forward(Z);
+        md s = activate_forward(Z);
         return dA.array() * s.array() * (1 - s.array());
     }
 };

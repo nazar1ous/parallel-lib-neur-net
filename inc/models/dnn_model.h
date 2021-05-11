@@ -6,16 +6,23 @@
 #include "layers/loss.h"
 
 class Model{
+private:
+    std::vector<OptimizerWrapper*> optimizers;
 public:
     size_t L;
     std::vector<FCLayer*> layers;
     std::vector<std::unordered_map<std::string, md>> caches;
     LossWrapper* loss;
 
-    // TODO probably put the optimizer here
-    //  that is common to all layers
-    Model(std::vector<FCLayer*>& layers, const std::string& loss_type){
+    Model(std::vector<FCLayer*>& layers,
+          const std::string& loss_type,
+          const std::string& optimizer_type,
+        const std::unordered_map<std::string, double>& hparams){
+
         L = layers.size();
+        optimizers = std::vector<OptimizerWrapper*>(L,
+                                                    new OptimizerWrapper{optimizer_type, hparams});
+
         this->layers = layers;
         this->caches = std::vector<std::unordered_map<std::string, md>>(L);
         loss = new LossWrapper{loss_type};
@@ -43,7 +50,7 @@ public:
 
     void update_parameters(){
         for (int i = 0; i < L; ++i){
-            layers[i]->update_params(caches[i]);
+            layers[i]->update_params(caches[i], *optimizers[i]);
         }
     }
 

@@ -9,32 +9,15 @@
 #include <unordered_map>
 
 
-//md HStack(const md& d, int m) {
-//    int rows_n = d.rows();
-//    md vstacked_mat(rows_n, m);
-//    int col_offset = 0;
-//    for (int i = 0; i < m; ++i) {
-//        vstacked_mat.middleCols(col_offset, 1) = d;
-//        col_offset +=  1;
-//    }
-//    return vstacked_mat;
-//}
-
-
-
 class FCLayer{
 public:
-    OptimizerWrapper* optimizer;
     ActivationWrapper* activation;
     size_t input_size;
     size_t output_size;
     md W, b;
 
     FCLayer(size_t input_size, size_t output_size,
-            const std::string& optimizer_type,
-            const std::string& activation_type,
-            const std::unordered_map<std::string, double>& hparams){
-        optimizer = new OptimizerWrapper{optimizer_type, hparams};
+            const std::string& activation_type){
         activation = new ActivationWrapper{activation_type};
         this->input_size = input_size;
         this->output_size = output_size;
@@ -48,26 +31,26 @@ public:
     }
     md linear_backward(const md& dZ, std::unordered_map<std::string, md>& cache){
         auto m = dZ.cols();
-        cache["dW"] = (1/m) * (dZ * cache["A_prev"].transpose());
-        cache["db"] = (1/m) * dZ.rowwise().sum();
+        cache["dW"] = (dZ * cache["A_prev"].transpose())/m;
+        cache["db"] = dZ.rowwise().sum()/m;
         return W.transpose() * dZ;
 
     }
 
     md forward(const md& X, std::unordered_map<std::string, md>& cache){
         cache["A_prev"] = X;
-        auto Z = linear_forward(X);
+        md Z = linear_forward(X);
         cache["Z"] = Z;
         return activation->activate_forward(Z);
     }
 
     md backward(const md& dA, std::unordered_map<std::string, md>& cache){
-        auto dZ = activation->activate_backward(dA, cache["Z"]);
+        md dZ = activation->activate_backward(dA, cache["Z"]);
         return linear_backward(dZ, cache);
     }
 
-    void update_params(std::unordered_map<std::string, md>& cache){
-        optimizer->update_parameters(&W, &b, cache);
+    void update_params(std::unordered_map<std::string, md>& cache, OptimizerWrapper& optimizer){
+        optimizer.update_parameters(&W, &b, cache);
     }
 
     void initialize_parameters(){
@@ -76,9 +59,6 @@ public:
         std::mt19937 gen(rd());
         W = md(output_size, input_size).unaryExpr([&](double dummy){return dis(gen);});
         b = md(output_size, 1).unaryExpr([&](double dummy){return dis(gen);});
-//        std::cerr << W << std::endl;
-//        std::cerr << b << std::endl;
-
     }
 
 

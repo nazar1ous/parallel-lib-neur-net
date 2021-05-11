@@ -18,19 +18,23 @@ void test_fc_layer_basic(){
 
     std::unordered_map<std::string, double> m;
     m["alpha"] = 0.01;
-    auto l1 = new FCLayer(1, 2, "gd", "relu", m);
-    auto l2 = new FCLayer(2, 1, "gd", "relu", m);
-//    auto l3 = new FCLayer(10, 1, "gd", "sigmoid", m);
+    auto l1 = new FCLayer(1, 3, "sigmoid");
+    auto l2 = new FCLayer(3, 5, "linear");
+    auto l3 = new FCLayer(5, 10, "tanh");
+    auto l4 = new FCLayer(10, 1, "relu");
+
+
     std::vector<FCLayer*> layers = {
             l1,
-            l2
+            l2,
+            l3,
+            l4
     };
-    auto model = new Model(layers, "mse");
+    auto model = new Model(layers, "mse", "gd", m);
     std::fstream in_file("/home/nazariikuspys/temp/data.txt");
     std::vector<double> v;
     read_file_to_vector(&v, &in_file);
     int n = (int)v[0];
-    std::cout << n;
     md X_train = md (1, n*2);
     md Y_train = md (1, n*2);
     int j = 0;
@@ -41,18 +45,6 @@ void test_fc_layer_basic(){
     }
 
     model->fit(X_train, Y_train);
-
-//    std::cout << std::endl;
-//    std::cout << X_train << std::endl;
-//    std::cout << Y_train << std::endl;
-
-//    std::cout << l->input_size;
-//    std::cout << l->optimizer->hparams["alpha"];
-//    std::cout << l->activation->type << std::endl;
-//    std::cout << l->W << std::endl;
-//    std::cout << l->b << std::endl;
-//    std::unordered_map<std::string, md> kal;
-//    kal.insert(std::make_pair("A_prev", X_train));
 }
 
 

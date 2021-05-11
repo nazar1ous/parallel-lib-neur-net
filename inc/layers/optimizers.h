@@ -30,12 +30,6 @@ public:
 
     void update_parameters(md* W, md* b,
                            std::unordered_map<std::string, md>& cache) override{
-//        std::cerr << W->cols() << " " << W->rows() << std::endl;
-//        std::cerr << cache["dW"].cols() << " " << cache["dW"].rows() << std::endl;
-//
-//        std::cerr << b->cols() << " " << b->rows() << std::endl;
-//        std::cerr << cache["db"].cols() << " " << cache["db"].rows() << std::endl;
-
         *W = *W - this->hparams["alpha"]*cache["dW"];
         *b = *b - this->hparams["alpha"]*cache["db"];
     };
@@ -66,7 +60,7 @@ public:
     }
 
     void update_parameters(md* W, md* b,
-                           std::unordered_map<std::string, md>& cache){
+                           std::unordered_map<std::string, md>& cache) override{
         return wrapper->update_parameters(W, b, cache);
     }
 };
