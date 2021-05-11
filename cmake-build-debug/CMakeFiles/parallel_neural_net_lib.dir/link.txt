@@ -1,1 +1,0 @@
-/usr/bin/c++ -g CMakeFiles/parallel_neural_net_lib.dir/src/main.cpp.o -o parallel_neural_net_lib  libliba.a /usr/lib/x86_64-linux-gnu/libboost_program_options.a 

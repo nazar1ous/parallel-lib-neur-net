@@ -1,7 +1,0 @@
-/snap/clion/151/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/nazariikuspys/UCU/AKS/parallel-lib-neur-net
-
-Consider using PVS-Studio with `-DENABLE_PVS_STUDIO=ON` flag or Windows GUI application.
-
--- Configuring done
--- Generating done
--- Build files have been written to: /home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug

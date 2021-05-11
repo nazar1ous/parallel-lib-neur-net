@@ -55,12 +55,14 @@ public:
     }
 
     void fit(const md& X_train, const md& Y_train,
-             int max_iter=100){
-        for (int i = 0; i < max_iter; ++i){
+             int num_epochs=100, bool verbose=false){
+        for (int i = 0; i < num_epochs; ++i){
             auto AL = forward(X_train);
             backward(AL, Y_train);
             update_parameters();
-            std::cout << i << "-- " <<  get_cost(AL, Y_train) << std::endl;
+            if (verbose){
+                std::cout << "i=" << i << " cost=" <<  get_cost(AL, Y_train) << std::endl;
+            }
         }
     }
 

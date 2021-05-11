@@ -44,7 +44,7 @@ void test_fc_layer_basic(){
         j++;
     }
 
-    model->fit(X_train, Y_train);
+    model->fit(X_train, Y_train, 50, true);
 }
 
 
