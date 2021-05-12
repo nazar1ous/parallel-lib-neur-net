@@ -78,8 +78,31 @@ public:
         }
     }
 
-
     void fit(const md& X_train, const md& Y_train,
+             int num_epochs=100, bool verbose=false,
+             int mini_batches_num=10){
+        std::vector<std::pair<md, md>> data_split_ = split_data(X_train, Y_train, mini_batches_num);
+
+        for (int i = 0; i < num_epochs; ++i){
+            md AL;
+            md Y;
+            for (int b = 0; b < mini_batches_num; ++b){
+                md X = data_split_[b].first;
+                Y = data_split_[b].second;
+                AL = forward(X);
+                backward(AL, Y);
+                update_parameters();
+            }
+
+            if (verbose){
+                std::cout << "i=" << i << " cost=" <<  get_cost(AL, Y) << std::endl;
+            }
+        }
+
+    }
+
+
+    void fit_with_accumulative_gradiant(const md& X_train, const md& Y_train,
              int num_epochs=100, bool verbose=false,
              int mini_batches_num=10){
         std::vector<std::pair<md, md>> data_split_ = split_data(X_train, Y_train, mini_batches_num);
