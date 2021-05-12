@@ -3,7 +3,7 @@ project(parallel_neural_net_lib
         VERSION 1.0.0
         DESCRIPTION "Library"
         HOMEPAGE_URL "https://github.com/nazar1ous/parallel-lib-neur-net"
-        LANGUAGES C CXX)
+        LANGUAGES CXX)
 
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)

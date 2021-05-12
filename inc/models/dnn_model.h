@@ -1,6 +1,8 @@
 #include <iostream>
 #include "layers/fc_layer.h"
 #include <Eigen/Dense>
+#include <Eigen/Core>
+
 #include "layers/config.h"
 #include <unordered_map>
 #include "layers/loss.h"
@@ -8,11 +10,33 @@
 class Model{
 private:
     std::vector<OptimizerWrapper*> optimizers;
+    static std::vector<std::pair<md, md>> split_data(const md& X_train,
+                                                     const md& Y_train,
+                                                     int mini_batches_num){
+        std::vector<std::pair<md, md>> split_data_;
+        if (mini_batches_num > Y_train.cols()){
+            std::cerr << "Not valid number of mini batches" << std::endl;
+            exit(1);
+        }
+        int k = Y_train.cols()/mini_batches_num;
+        int curI = 0;
+        for (int i = 0; i <= Y_train.cols()-k+1; i+=k){
+            split_data_.emplace_back(X_train.block(0, i, X_train.rows(), k),
+                                                 Y_train.block(0, i, Y_train.rows(), k));
+            curI = i+k;
+        }
+        if (curI != Y_train.cols()){
+            split_data_.emplace_back(X_train.block(0, curI, X_train.rows(), X_train.cols() - curI),
+                                     Y_train.block(0, curI, Y_train.rows(), Y_train.cols() - curI));
+        }
+        return split_data_;
+    }
 public:
     size_t L;
     std::vector<FCLayer*> layers;
     std::vector<std::unordered_map<std::string, md>> caches;
     LossWrapper* loss;
+    std::vector<std::pair<md, md>> layers_grads;
 
     Model(std::vector<FCLayer*>& layers,
           const std::string& loss_type,
@@ -54,14 +78,45 @@ public:
         }
     }
 
+
     void fit(const md& X_train, const md& Y_train,
-             int num_epochs=100, bool verbose=false){
+             int num_epochs=100, bool verbose=false,
+             int mini_batches_num=10){
+        std::vector<std::pair<md, md>> data_split_ = split_data(X_train, Y_train, mini_batches_num);
+
         for (int i = 0; i < num_epochs; ++i){
-            auto AL = forward(X_train);
-            backward(AL, Y_train);
+            // After each backward pass it computes dW, db to cache[l] [0..L)
+            // So we need the vector of these caches about each layer also
+            layers_grads = std::vector<std::pair<md, md>>(L);
+            md AL;
+            md Y;
+            // TODO add parallelization with OpenMP
+            for (int b = 0; b < mini_batches_num; ++b){
+                md X = data_split_[b].first;
+                Y = data_split_[b].second;
+                AL = forward(X);
+                backward(AL, Y);
+                if (b == 0){
+                    for (int l = 0; l < L; ++l){
+                        layers_grads[l] = std::make_pair(caches[l]["dW"],
+                                                         caches[l]["db"]);
+                    }
+                }else{
+                    for (int l = 0; l < L; ++l){
+                        layers_grads[l].first += caches[l]["dW"];
+                        layers_grads[l].second += caches[l]["db"];
+                    }
+                }
+            }
+            // Accumulative gradient
+            for (int l = 0; l < L; ++l){
+                caches[l]["dW"] = layers_grads[l].first;
+                caches[l]["db"] = layers_grads[l].second;
+            }
+
             update_parameters();
             if (verbose){
-                std::cout << "i=" << i << " cost=" <<  get_cost(AL, Y_train) << std::endl;
+                std::cout << "i=" << i << " cost=" <<  get_cost(AL, Y) << std::endl;
             }
         }
     }
