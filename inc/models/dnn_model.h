@@ -1,24 +1,26 @@
 #include <iostream>
-#include "layers/fc_layer.h"
+//#include "layers/fc_layer.h"
 #include <Eigen/Dense>
 #include <Eigen/Core>
 
 #include "layers/config.h"
 #include <unordered_map>
 #include "layers/loss.h"
+#include "layers/optimizers.h"
 
 class Model{
 private:
-    std::vector<OptimizerWrapper*> optimizers;
+    BasicOptimizer* optimizer;
+
     static std::vector<std::pair<md, md>> split_data(const md& X_train,
                                                      const md& Y_train,
-                                                     int mini_batches_num){
-        std::vector<std::pair<md, md>> split_data_;
-        if (mini_batches_num > Y_train.cols()){
-            std::cerr << "Not valid number of mini batches" << std::endl;
+                                                     int batch_size){
+        if (batch_size > Y_train.cols()){
+            std::cerr << "Not valid batch size" << std::endl;
             exit(1);
         }
-        int k = Y_train.cols()/mini_batches_num;
+        std::vector<std::pair<md, md>> split_data_;
+        int k = batch_size;
         int curI = 0;
         for (int i = 0; i <= Y_train.cols()-k+1; i+=k){
             split_data_.emplace_back(X_train.block(0, i, X_train.rows(), k),
@@ -38,18 +40,22 @@ public:
     LossWrapper* loss;
     std::vector<std::pair<md, md>> layers_grads;
 
-    Model(std::vector<FCLayer*>& layers,
-          const std::string& loss_type,
-          const std::string& optimizer_type,
-        const std::unordered_map<std::string, double>& hparams){
-
+    explicit Model(std::vector<FCLayer*>& layers){
         L = layers.size();
-        optimizers = std::vector<OptimizerWrapper*>(L,
-                                                    new OptimizerWrapper{optimizer_type, hparams});
-
         this->layers = layers;
         this->caches = std::vector<std::unordered_map<std::string, md>>(L);
-        loss = new LossWrapper{loss_type};
+    }
+
+    void add(FCLayer* layer){
+        layers.push_back(layer);
+    }
+
+    void compile(const std::string& loss,
+                 BasicOptimizer* optimizer){
+        // TODO add metrics
+        this->loss = new LossWrapper{loss};
+        this->optimizer = optimizer;
+        this->optimizer->init_(layers);
     }
 
     md forward(const md& X){
@@ -60,7 +66,7 @@ public:
         return Y;
     }
 
-    double get_cost(const md& AL, const md& Y){
+    double get_cost(const md& AL, const md& Y) const{
         return loss->get_cost(AL, Y);
     }
 
@@ -72,28 +78,32 @@ public:
         }
     }
 
-    void update_parameters(){
-        for (int i = 0; i < L; ++i){
-            layers[i]->update_params(caches[i], *optimizers[i]);
-        }
+    void update_parameters(int mini_batch_n){
+        optimizer->update_parameters(caches, mini_batch_n);
+
     }
 
     void fit(const md& X_train, const md& Y_train,
-             int num_epochs=100, bool verbose=false,
-             int mini_batches_num=10){
-        std::vector<std::pair<md, md>> data_split_ = split_data(X_train, Y_train, mini_batches_num);
+             int epochs=100, bool verbose=false,
+             int batch_size=32){
+        std::vector<std::pair<md, md>> data_split_ = split_data(X_train, Y_train, batch_size);
+        int batches_n = Y_train.cols()/batch_size;
+        if (Y_train.cols() % batch_size != 0){
+            batches_n++;
+        }
 
-        for (int i = 0; i < num_epochs; ++i){
+        for (int i = 0; i < epochs; ++i){
             md AL;
             md Y;
-            for (int b = 0; b < mini_batches_num; ++b){
+            for (int b = 0; b < batches_n; ++b){
                 md X = data_split_[b].first;
                 Y = data_split_[b].second;
                 AL = forward(X);
                 backward(AL, Y);
-                update_parameters();
+                update_parameters(b+1);
             }
 
+            // TODO add metrics
             if (verbose){
                 std::cout << "i=" << i << " cost=" <<  get_cost(AL, Y) << std::endl;
             }
@@ -137,7 +147,7 @@ public:
                 caches[l]["db"] = layers_grads[l].second;
             }
 
-            update_parameters();
+            update_parameters(1);
             if (verbose){
                 std::cout << "i=" << i << " cost=" <<  get_cost(AL, Y) << std::endl;
             }

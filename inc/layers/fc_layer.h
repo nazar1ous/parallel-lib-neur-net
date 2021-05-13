@@ -3,7 +3,6 @@
 #include <Eigen/Dense>
 #include <cmath>
 #include "layers/activations.h"
-#include "layers/optimizers.h"
 #include <random>
 #include <ctime>
 #include <unordered_map>
@@ -49,16 +48,21 @@ public:
         return linear_backward(dZ, cache);
     }
 
-    void update_params(std::unordered_map<std::string, md>& cache, OptimizerWrapper& optimizer){
-        optimizer.update_parameters(&W, &b, cache);
-    }
-
     void initialize_parameters(){
         std::normal_distribution<double> dis(0, 1);
         std::random_device rd;
         std::mt19937 gen(rd());
         W = md(output_size, input_size).unaryExpr([&](double dummy){return dis(gen);});
         b = md(output_size, 1).unaryExpr([&](double dummy){return dis(gen);});
+    }
+
+    std::vector<md*> get_params(){
+        return std::vector<md*>{&W, &b};
+    }
+
+
+    static std::vector<std::string> get_grads(){
+        return std::vector<std::string>{"dW", "db"};
     }
 
 
