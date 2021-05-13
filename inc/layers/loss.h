@@ -1,4 +1,6 @@
 #include "layers/config.h"
+#include <boost/program_options.hpp>
+#include <boost/algorithm/string/case_conv.hpp>
 
 
 class Loss{
