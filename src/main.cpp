@@ -28,10 +28,10 @@ void test_fc_layer_basic(){
             l4
     };
     auto model = new Model(layers);
-//    auto op = new SGD(0.01);
+    auto op = new SGD(0.01);
 //    auto op = new RMSprop(0.01);
 //    auto op = new RMSprop(0.01);
-    auto op = new GDWithMomentum(0.01);
+//    auto op = new GDWithMomentum(0.01);
 
     model->compile("mse", op);
     std::fstream in_file("/home/nazariikuspys/temp/data.txt");
@@ -47,7 +47,9 @@ void test_fc_layer_basic(){
         j++;
     }
 
-    model->fit(X_train, Y_train, 50, true);
+//    model->fit(X_train, Y_train, 50, true);
+    model->fit_data_parallel(X_train, Y_train, 50, true);
+
 }
 
 

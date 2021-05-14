@@ -2,6 +2,8 @@
 //#include "layers/fc_layer.h"
 #include <Eigen/Dense>
 #include <Eigen/Core>
+#include <omp.h>
+
 
 #include "layers/config.h"
 #include <unordered_map>
@@ -71,6 +73,8 @@ public:
     }
 
     void backward(const md& AL, const md& Y){
+        // TODO dropout apply mask
+        //  Also, if we want L2 regularization, add it to loss 
         md dA = loss->get_loss_backward(AL, Y);
         for (int i = L - 1; i >= 0; --i){
             // cache is updated
@@ -111,40 +115,51 @@ public:
 
     }
 
+    // The idea of making a bunch of models and then pass batches are stupid because of
+    // usage too much memory(each instance of a model has a cache)
+    void fit_data_parallel(const md& X_train, const md& Y_train,
+                           int epochs=100, bool verbose=false,
+                           int batch_size=32){
+        if (optimizer->type != "sgd"){
+            std::cerr << "To use data parallelization, you have to use SGD" << std::endl;
+            exit(1);
+        }
+        std::vector<std::pair<md, md>> data_split_ = split_data(X_train, Y_train, batch_size);
+        int batches_n = Y_train.cols()/batch_size;
+        if (Y_train.cols() % batch_size != 0){
+            batches_n++;
+        }
 
-    void fit_with_accumulative_gradiant(const md& X_train, const md& Y_train,
-             int num_epochs=100, bool verbose=false,
-             int mini_batches_num=10){
-        std::vector<std::pair<md, md>> data_split_ = split_data(X_train, Y_train, mini_batches_num);
-
-        for (int i = 0; i < num_epochs; ++i){
+        for (int i = 0; i < epochs; ++i){
             // After each backward pass it computes dW, db to cache[l] [0..L)
             // So we need the vector of these caches about each layer also
             layers_grads = std::vector<std::pair<md, md>>(L);
             md AL;
             md Y;
-            // TODO add parallelization with OpenMP
-            for (int b = 0; b < mini_batches_num; ++b){
+
+            #pragma omp parallel for
+            for (int b = 0; b < batches_n; ++b){
                 md X = data_split_[b].first;
                 Y = data_split_[b].second;
                 AL = forward(X);
                 backward(AL, Y);
+                auto m = X.cols();
                 if (b == 0){
                     for (int l = 0; l < L; ++l){
-                        layers_grads[l] = std::make_pair(caches[l]["dW"],
-                                                         caches[l]["db"]);
+                        layers_grads[l] = std::make_pair(m*caches[l]["dW"],
+                                                         m*caches[l]["db"]);
                     }
                 }else{
                     for (int l = 0; l < L; ++l){
-                        layers_grads[l].first += caches[l]["dW"];
-                        layers_grads[l].second += caches[l]["db"];
+                        layers_grads[l].first += m*caches[l]["dW"];
+                        layers_grads[l].second += m*caches[l]["db"];
                     }
                 }
             }
             // Accumulative gradient
             for (int l = 0; l < L; ++l){
-                caches[l]["dW"] = layers_grads[l].first;
-                caches[l]["db"] = layers_grads[l].second;
+                caches[l]["dW"] = layers_grads[l].first/Y_train.cols();
+                caches[l]["db"] = layers_grads[l].second/Y_train.cols();
             }
 
             update_parameters(1);
