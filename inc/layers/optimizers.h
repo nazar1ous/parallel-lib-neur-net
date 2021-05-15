@@ -33,10 +33,11 @@ public:
 
 class SGD: public BasicOptimizer{
 public:
-    std::string type = "sgd";
+//    std::string type = "sgd";
     double learning_rate;
     explicit SGD(double learning_rate){
         this->learning_rate = learning_rate;
+        this->type = "sgd";
     }
 
     void update_param_(md* param, const md& grad, size_t layer_index, int param_index, int mini_batch_n) override{
@@ -47,7 +48,6 @@ public:
 
 class GDWithMomentum: public BasicOptimizer{
 public:
-    std::string type = "GDWithMomentum";
     double beta_1;
     double learning_rate;
     std::vector<std::vector<md>> V;
@@ -71,6 +71,8 @@ public:
     GDWithMomentum(double learning_rate, double beta_1=0.9){
         this->learning_rate = learning_rate;
         this->beta_1 = beta_1;
+        this->type = "GDWithMomentum";
+
     }
 
     void update_param_(md* param, const md& grad, size_t layer_index, int param_index, int mini_batch_n) override{
@@ -82,7 +84,6 @@ public:
 
 class RMSprop: public BasicOptimizer{
 public:
-    std::string type = "RMSprop";
     double beta_2;
     double epsilon;
     double learning_rate;
@@ -108,6 +109,7 @@ public:
         this->learning_rate = learning_rate;
         this->beta_2 = beta_2;
         this->epsilon = epsilon;
+        this->type = "RMSprop";
     }
 
     void update_param_(md* param, const md& grad, size_t layer_index, int param_index, int mini_batch_n) override{
@@ -119,7 +121,6 @@ public:
 
 class Adam: public BasicOptimizer{
 public:
-    std::string type = "Adam";
     double beta_1;
     double beta_2;
     double epsilon;
@@ -156,6 +157,7 @@ public:
         this->beta_1 = beta_1;
         this->beta_2 = beta_2;
         this->epsilon = epsilon;
+        this->type = "Adam";
     }
 
     void update_param_(md* param, const md& grad, size_t layer_index, int param_index, int mini_batch_n) override{

@@ -20,7 +20,7 @@ public:
 class MSE: public Loss{
 public:
     MSE(){
-        this->type = "mse";
+        this->type = "MSE";
     }
 
     md get_loss(const md& AL, const md& Y) override{
@@ -36,16 +36,33 @@ public:
 class BinaryCrossEntropy: public Loss{
 public:
     BinaryCrossEntropy(){
-        this->type = "binary_cross_entropy";
+        this->type = "BinaryCrossEntropy";
     }
 
 
     md get_loss(const md& AL, const md& Y) override{
-        return AL.array().log() * Y.array() + (1 - AL.array()).log() * (1 - Y.array());
+        return -(AL.array().log() * Y.array() + (1 - AL.array()).log() * (1 - Y.array()));
     }
 
     md get_loss_backward(const md& AL, const md& Y) override{
         return - ((Y.array()/AL.array() - (1 - Y.array())/(1 - AL.array())));
+    }
+
+};
+
+class CategoricalCrossEntropy: public Loss{
+public:
+    CategoricalCrossEntropy(){
+        this->type = "CategoricalCrossEntropy";
+    }
+
+
+    md get_loss(const md& AL, const md& Y) override{
+        return -(Y.array()*(AL.array().log())).colwise().sum();
+    }
+
+    md get_loss_backward(const md& AL, const md& Y) override{
+        return - (Y-AL);
     }
 
 };
@@ -56,13 +73,15 @@ private:
     Loss *wrapper;
     void builder(){
         auto value = this->type;
-        if (value == "mse"){
+        if (value == "MSE"){
             wrapper = new MSE{};
-        }else if (value == "binary_cross_entropy"){
+        }else if (value == "BinaryCrossEntropy"){
             wrapper = new BinaryCrossEntropy{};
+        }else if (value == "CategoricalCrossEntropy") {
+            wrapper = new CategoricalCrossEntropy{};
         }else{
-            std::cerr << "Not implemented type of Loss function";
-        }
+                std::cerr << "Not implemented type of Loss function";
+            }
     }
 public:
 

@@ -60,6 +60,18 @@ public:
 };
 
 
+class SoftMax: public Activation{
+public:
+    std::string type = "softmax";
+    md activate_forward(const md& x) override{
+        auto s = x.array().exp();
+        return s/s.sum();
+    }
+    md activate_backward(const md& dA, const md& Z) override{
+        return md(dA);
+    }
+};
+
 class ActivationWrapper: public Activation{
 private:
     Activation *wrapper;
@@ -74,8 +86,11 @@ private:
             wrapper = new Linear{};
         }else if (value == "tanh") {
             wrapper = new Tanh{};
+        }else if (value == "softmax") {
+            wrapper = new SoftMax{};
         }else{
                 std::cerr << "Not implemented type of activation";
+                exit(1);
             }
     }
 public:
