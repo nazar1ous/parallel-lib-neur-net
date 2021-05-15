@@ -14,12 +14,18 @@ public:
     size_t input_size;
     size_t output_size;
     md W, b;
+    double stddev=1;
+    std::string initialization = "normal";
 
     FCLayer(size_t input_size, size_t output_size,
-            const std::string& activation_type){
+            const std::string& activation_type,
+            const std::string& initialization="normal",
+            double stddev=1){
         activation = new ActivationWrapper{activation_type};
         this->input_size = input_size;
         this->output_size = output_size;
+        this->stddev = stddev;
+        this->initialization = initialization;
         initialize_parameters();
     }
 
@@ -49,7 +55,12 @@ public:
     }
 
     void initialize_parameters(){
-        std::normal_distribution<double> dis(0, 1);
+        if (this->initialization == "he"){
+            stddev = sqrt((double)2/input_size);
+        }else if (this->initialization == "xavier"){
+            stddev = sqrt((double)6/(input_size+output_size));
+        }
+        std::normal_distribution<double> dis(0, stddev);
         std::random_device rd;
         std::mt19937 gen(rd());
         W = md(output_size, input_size).unaryExpr([&](double dummy){return dis(gen);});

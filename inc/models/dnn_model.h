@@ -12,7 +12,7 @@
 
 class Model{
 private:
-    BasicOptimizer* optimizer;
+    BasicOptimizer* optimizer{};
 
     static std::vector<std::pair<md, md>> split_data(const md& X_train,
                                                      const md& Y_train,
@@ -36,16 +36,14 @@ private:
         return split_data_;
     }
 public:
-    size_t L;
+    size_t L{};
     std::vector<FCLayer*> layers;
     std::vector<std::unordered_map<std::string, md>> caches;
-    LossWrapper* loss;
+    Loss* loss{};
     std::vector<std::pair<md, md>> layers_grads;
 
     explicit Model(std::vector<FCLayer*>& layers){
-        L = layers.size();
         this->layers = layers;
-        this->caches = std::vector<std::unordered_map<std::string, md>>(L);
     }
 
     void add(FCLayer* layer){
@@ -58,6 +56,18 @@ public:
         this->loss = new LossWrapper{loss};
         this->optimizer = optimizer;
         this->optimizer->init_(layers);
+        L = this->layers.size();
+        this->caches = std::vector<std::unordered_map<std::string, md>>(L);
+    }
+
+    void compile(Loss* loss,
+                 BasicOptimizer* optimizer){
+        // TODO add metrics
+        this->loss = loss;
+        this->optimizer = optimizer;
+        this->optimizer->init_(layers);
+        L = this->layers.size();
+        this->caches = std::vector<std::unordered_map<std::string, md>>(L);
     }
 
     md forward(const md& X){
@@ -68,7 +78,7 @@ public:
         return Y;
     }
 
-    double get_cost(const md& AL, const md& Y) const{
+    double get_cost(const md& AL, const md& Y){
         return loss->get_cost(AL, Y);
     }
 
@@ -171,5 +181,21 @@ public:
 
     md predict(const md& X){
         return forward(X);
+    }
+
+    double evaluate(md& X_test, const md& Y_test){
+        md Y_hat = predict(X_test);
+        md diff = Y_test-Y_hat;
+        double good = 0;
+        for (int i = 0; i < diff.cols(); ++i){
+            if (std::abs(diff(0, i)) <= 0.5){
+                good++;
+            }
+        }
+        return good/Y_test.cols();
+    }
+
+    Model() {
+
     }
 };
