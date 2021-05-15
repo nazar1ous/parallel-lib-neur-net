@@ -36,6 +36,12 @@ public:
         this->b = dis(gen) * 0.5;
     }
 
+    void set_params_to_zero() {
+        for (size_t i=0; i < f_depth; i++) {
+            this->W(i, 0) = Eigen::MatrixXd::Zero(f_size, f_size);
+        }
+    }
+
     double one_conv_step(convL input_data) {
         double cell_res = 0;
         for (size_t i = 0; i < input_data.rows(); i++) {
