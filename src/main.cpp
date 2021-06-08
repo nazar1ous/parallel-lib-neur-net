@@ -61,7 +61,7 @@ void test_fc_layer_basic(){
     auto op = new Adam(0.01);
     auto loss = new BinaryCrossEntropy();
     model->compile(loss, op);
-    model->fit(X_train, Y_train, 50, true, 24);
+    model->fit(X_train, Y_train, 10, true, 24);
     auto res = model->evaluate(X_test, Y_test);
     std::cout << "Test accuracy = " << std::to_string(res) << std::endl;
 
