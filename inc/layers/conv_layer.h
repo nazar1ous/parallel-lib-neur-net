@@ -16,10 +16,15 @@
 
 class Conv3D{
 private:
-    initialize(){
-        for (int i = 0; i < this->filters_n; ++i){
-            this->filters[i] = Filter3D(filter_size, this->input_channels_n);
-            this->filters[i].initialize_parameters();
+
+    void initialize_parameters(){
+
+        std::normal_distribution<double> dis(0, 1);
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        for (size_t i=0; i < filters_n; i++) {
+            this->W[i] = md(filter_size, filter_size).unaryExpr([&](double dummy){return dis(gen);}) * 0.5;
+            this->b[i] = Eigen::MatrixXd::Zero(out_H, out_H);
         }
     }
 
@@ -28,19 +33,20 @@ private:
         double cell_res = 0;
         for (int c = 0; c < f.f_depth; c++) {
             auto X_block = X[c].block(ver_st, hor_st, ver_end-ver_st, hor_end-hor_st);
-            cell_res += X_block.cwiseProduct(f.W[c]).sum();
+            cell_res += X_block.cwiseProduct(W[c]).sum();
         }
-        cell_res += f.b;
         return cell_res;
     }
 public:
     ActivationWrapper* activation;
-    std::vector<Filter3D> filters;
     int filters_n;
     int filter_size;
     size_t input_channels_n;
     size_t input_H, input_W;
     size_t stride;
+    size_t out_H, out_W;
+    m3d W;
+    m3d b;
 
 
     Conv3D(size_t input_H, size_t input_W, int input_channels_n, int filter_size, int filters_n,
@@ -54,19 +60,23 @@ public:
         this->filter_size = filter_size;
         this->activation = new ActivationWrapper{activation_type};
         this->stride = stride;
-        initialize();
+        this->out_H = floor((input_H - filter_size)/stride) + 1;
+        this->out_W = floor((input_W - filter_size)/stride) + 1;
+        initialize_parameters();
     }
 
-    std::vector<m3d> forward(const std::vector<m3d>& X_data){
+    std::vector<m3d> forward(const std::vector<m3d>& X_data,
+                             std::unordered_map<std::string, m3d>& cache){
         // m = filters_n
         std::vector<m3d> Y_data(filters_n);
         // X_data - (m; <m3d>)
-        size_t out_H = floor((input_H - filter_size)/stride) + 1;
-        size_t out_W = floor((input_W - filter_size)/stride) + 1;
+        cache["A_prev"] = std::vector{X_data};
+
+
         for (int i = 0; i < X_data.size(); ++i){
             // X - is one example
             auto X = X_data[i];
-            md Y(out_H, out_W);
+            md Z_one(out_H, out_W);
             for (int h = 0; h < out_H; ++h){
                 auto vert_st = h * stride;
                 auto vert_end = vert_st + filter_size;
@@ -75,15 +85,22 @@ public:
                     auto hor_end = hor_st + filter_size;
                     for (int c = 0; c < filters_n; ++c){
                         double res = apply_filter(X, vert_st, vert_end, hor_st, hor_end, this->filters[c]);
-                        Y(h, w) = res;
+                        Z_one(h, w) = res;
                     }
                 }
             }
-            Y_data[i] = Y;
+
+            // add bias
+            for (int c = 0; c < filters_n; ++c){
+                Z += b[c];
+            }
+            cache["Z"] = std::vector{Z};
+            Y_data[i] = activation->activate_forward(Z);
         }
         return Y_data;
-
     }
+
+
 //
 //    md single_filter_forward(Filter3D filter) {
 //        auto f = filter.f_size;
