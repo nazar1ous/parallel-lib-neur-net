@@ -14,8 +14,20 @@ public:
 
     }
 
+    virtual std::vector<std::vector<md*>> get_matrices_def() {
+        return std::vector<std::vector<md*>>{std::ref(params), std::ref(grads)};
+    }
 
-    virtual inline void update_param_(md* param, const md& grad, int param_index, int mini_batch_n) = 0;
+    virtual std::vector<std::vector<md>> get_matrices_ndef() {
+        return std::vector<std::vector<md>>{};
+    }
+
+    virtual std::vector<double> get_hparams_(){
+        return std::vector<double>{};
+    }
+
+
+    virtual void update_param_(md* param, const md& grad, int param_index, int mini_batch_n){};
 
     void update_parameters(int mini_batch_n){
 
@@ -26,6 +38,8 @@ public:
             update_param_(p, grad, i, mini_batch_n);
         }
     };
+
+    BasicOptimizer() = default;
 
 
 };
@@ -42,6 +56,11 @@ public:
     void update_param_(md* param, const md& grad, int param_index, int mini_batch_n) override{
         *param = *param - learning_rate*grad;
     }
+
+
+    std::vector<double> get_hparams_() override{
+        return std::vector<double>{std::ref(learning_rate)};
+    }
 };
 
 
@@ -50,7 +69,6 @@ public:
     double beta_1;
     double learning_rate;
     std::vector<md> V;
-
 
     void init_(const std::vector<md*>& params,
                const std::vector<md*>& grads) override{
@@ -72,6 +90,14 @@ public:
     void update_param_(md* param, const md& grad, int param_index, int mini_batch_n) override{
         V[param_index] = beta_1 * V[param_index] + (1-beta_1) * grad;
         *param = *param - learning_rate*V[param_index];
+    }
+
+    std::vector<std::vector<md>> get_matrices_ndef() override{
+        return std::vector<std::vector<md>>{std::ref(V)};
+    }
+
+    std::vector<double> get_hparams_() override{
+        return std::vector<double>{std::ref(learning_rate), std::ref(beta_1)};
     }
 };
 
@@ -104,6 +130,15 @@ public:
     void update_param_(md* param, const md& grad, int param_index, int mini_batch_n) override{
         S[param_index] = beta_2 * S[param_index] + (1-beta_2) * grad.array().square().matrix();
         *param = *param - (learning_rate*grad.array()/(S[param_index].array().sqrt()+epsilon)).matrix();
+    }
+
+
+    std::vector<std::vector<md>> get_matrices_ndef() override{
+        return std::vector<std::vector<md>>{std::ref(S)};
+    }
+
+    std::vector<double> get_hparams_() override{
+        return std::vector<double>{std::ref(learning_rate), std::ref(beta_2), std::ref(epsilon)};
     }
 };
 
@@ -144,5 +179,17 @@ public:
         auto S_corr = S[param_index]/(1-std::pow(beta_2, mini_batch_n));
 
         *param = *param - learning_rate*(V_corr.array()/(S_corr.array().sqrt() + epsilon)).matrix();
+    }
+
+
+    std::vector<std::vector<md>> get_matrices_ndef() override{
+        return std::vector<std::vector<md>>{std::ref(V), std::ref(S)};
+    }
+
+     std::vector<double> get_hparams_() override{
+        return std::vector<double>{std::ref(learning_rate),
+                                    std::ref(beta_1),
+                                    std::ref(beta_2),
+                                    std::ref(epsilon)};
     }
 };

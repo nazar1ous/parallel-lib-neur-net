@@ -8,9 +8,13 @@ class Activation{
 
 public:
     std::string type;
-    virtual inline md activate_forward(const md& x) = 0;
-    virtual inline md activate_backward(const md& dA,
-                                              const md& Z) = 0;
+    virtual md activate_forward(const md& x){
+        return md{};
+    };
+    virtual md activate_backward(const md& dA,
+                                              const md& Z){
+        return md{};
+    };
 };
 
 class Sigmoid: public Activation{
@@ -72,40 +76,43 @@ public:
     }
 };
 
-class ActivationWrapper: public Activation{
-private:
-    Activation *wrapper;
-    void builder(){
-        auto value = boost::to_lower_copy(this->type);
-
-        if (value == "sigmoid"){
-            wrapper = new Sigmoid{};
-        }else if (value == "relu"){
-            wrapper = new ReLu{};
-        }else if (value == "linear"){
-            wrapper = new Linear{};
-        }else if (value == "tanh") {
-            wrapper = new Tanh{};
-        }else if (value == "softmax") {
-            wrapper = new SoftMax{};
-        }else{
-                std::cerr << "Not implemented type of activation";
-                exit(1);
-            }
-    }
+class ActivationWrapper{
 public:
-    explicit ActivationWrapper(const std::string& type){
-        this->type = type;
-        builder();
+    Activation wrapper;
+    std::string type;
+    void builder(){
+
+        if (this->type == "sigmoid"){
+            wrapper = Sigmoid{};
+        }else if (this->type == "relu"){
+            wrapper = ReLu{};
+        }else if (this->type == "linear"){
+            wrapper = Linear{};
+        }else if (this->type == "tanh") {
+            wrapper = Tanh{};
+        }else if (this->type == "softmax") {
+            wrapper = SoftMax{};
+        }else{
+            std::cerr << "Not implemented type of activation";
+            exit(1);
+        }
     }
-    md activate_forward(const md& x) override {
-        return wrapper->activate_forward(x);
+    explicit ActivationWrapper(const std::string& type){
+        this->type = boost::to_lower_copy(type);
+        builder();
+
+    }
+
+    md activate_forward(const md& x) {
+        return wrapper.activate_forward(x);
     }
 
     md activate_backward(const md& dA,
-                                      const md& Z) override {
-        return wrapper->activate_backward(dA, Z);
+                                      const md& Z) {
+        return wrapper.activate_backward(dA, Z);
     }
+
+    ActivationWrapper() = default;
 
 };
 

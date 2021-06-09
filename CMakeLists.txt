@@ -25,7 +25,7 @@ include_directories(inc/eigen-3.3.9 inc src)
 add_library(liba STATIC inc/layers/fc_layer.h src/layers/fc_layer.cpp inc/layers/activations.h
         inc/layers/optimizers.h inc/models/dnn_model.h src/models/dnn_model.cpp inc/layers/config.h
         inc/layers/loss.h inc/layers/conv_layer.h inc/layers/filter.h inc/layers/max_pool.h
-        inc/layers/fc_layer_mpi.h inc/layers/optimizers_mpi.h inc/models/dnn_model_mpi.h inc/layers/structures_mpi.h)
+        inc/layers/fc_layer_mpi.h inc/layers/optimizers_mpi.h inc/models/dnn_model_mpi.h)
 
 find_package(MPI REQUIRED) #make it REQUIRED, if you want
 include_directories(SYSTEM ${MPI_INCLUDE_PATH})
@@ -35,7 +35,7 @@ target_link_libraries(parallel_neural_net_lib liba)
 set(ALL_TARGETS liba parallel_neural_net_lib)
 
 target_link_libraries(parallel_neural_net_lib Boost::program_options Boost::mpi Boost::serialization)
-target_link_libraries(liba plotter Boost::program_options Boost::mpi Boost::serialization)
+target_link_libraries(liba Boost::program_options Boost::mpi Boost::serialization)
 target_link_libraries(parallel_neural_net_lib ${Boost_LIBRARIES})
 target_link_libraries(liba ${Boost_LIBRARIES})
 target_link_libraries(parallel_neural_net_lib ${MPI_C_LIBRARIES})
