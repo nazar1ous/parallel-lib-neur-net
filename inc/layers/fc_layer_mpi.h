@@ -2,7 +2,7 @@
 #include <iostream>
 #include <Eigen/Dense>
 #include <cmath>
-#include "layers/activations.h"
+#include "layers/acivations_mpi.h"
 #include <random>
 #include <ctime>
 #include <unordered_map>
@@ -11,7 +11,7 @@
 
 class FCLayer{
 public:
-    ActivationWrapper activation{};
+    ActivationWrapper* activation;
     BasicOptimizer optimizer{};
     size_t input_size{};
     size_t output_size{};
@@ -22,16 +22,13 @@ public:
 
     FCLayer(size_t input_size, size_t output_size,
             const std::string& activation_type,
-            const BasicOptimizer& optimizer,
             const std::string& initialization="normal",
             double stddev=1){
-        this->activation = ActivationWrapper{activation_type};
+        this->activation = new ActivationWrapper{activation_type};
         this->input_size = input_size;
         this->output_size = output_size;
         this->stddev = stddev;
         this->initialization = initialization;
-        this->optimizer = optimizer;
-        initialize_parameters();
     }
 
     FCLayer()= default;
@@ -54,15 +51,17 @@ public:
     md forward(const md& X){
         A_prev = X;
         Z = linear_forward(X);
-        return activation.activate_forward(Z);
+        md temp = activation->activate_forward(Z);
+        std::cerr << "SUKA" << temp << std::endl;
+        return activation->activate_forward(Z);
     }
 
     md backward(const md& dA){
-        md dZ = activation.activate_backward(dA, Z);
+        md dZ = activation->activate_backward(dA, Z);
         return linear_backward(dZ);
     }
 
-    void initialize_parameters(){
+    void initialize_parameters(const BasicOptimizer& optimizer){
         if (this->initialization == "he"){
             stddev = sqrt((double)2/input_size);
         }else if (this->initialization == "xavier"){
@@ -73,6 +72,7 @@ public:
         std::mt19937 gen(rd());
         W = md(output_size, input_size).unaryExpr([&](double dummy){return dis(gen);});
         b = md(output_size, 1).unaryExpr([&](double dummy){return dis(gen);});
+        this->optimizer = optimizer;
         this->optimizer.init_(get_params(), get_grads());
     }
 

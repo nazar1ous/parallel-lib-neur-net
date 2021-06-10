@@ -61,6 +61,11 @@ public:
     std::vector<double> get_hparams_() override{
         return std::vector<double>{std::ref(learning_rate)};
     }
+
+    SGD(const SGD& copy){
+        this->learning_rate = copy.learning_rate;
+        this->type = copy.type;
+    }
 };
 
 
@@ -98,6 +103,12 @@ public:
 
     std::vector<double> get_hparams_() override{
         return std::vector<double>{std::ref(learning_rate), std::ref(beta_1)};
+    }
+
+    GDWithMomentum(const GDWithMomentum& copy){
+        this->learning_rate = copy.learning_rate;
+        this->beta_1 = copy.beta_1;
+        this->type = copy.type;
     }
 };
 
@@ -139,6 +150,14 @@ public:
 
     std::vector<double> get_hparams_() override{
         return std::vector<double>{std::ref(learning_rate), std::ref(beta_2), std::ref(epsilon)};
+    }
+
+    RMSprop(const RMSprop& copy){
+        this->learning_rate = copy.learning_rate;
+        this->beta_2 = copy.beta_2;
+        this->epsilon = copy.epsilon;
+        this->type = "RMSprop";
+
     }
 };
 
@@ -191,5 +210,13 @@ public:
                                     std::ref(beta_1),
                                     std::ref(beta_2),
                                     std::ref(epsilon)};
+    }
+
+    Adam(const Adam& copy){
+        this->learning_rate = copy.learning_rate;
+        this->beta_1 = copy.beta_1;
+        this->beta_2 = copy.beta_2;
+        this->epsilon = copy.epsilon;
+        this->type = "Adam";
     }
 };

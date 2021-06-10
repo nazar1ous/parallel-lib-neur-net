@@ -25,7 +25,8 @@ include_directories(inc/eigen-3.3.9 inc src)
 add_library(liba STATIC inc/layers/fc_layer.h src/layers/fc_layer.cpp inc/layers/activations.h
         inc/layers/optimizers.h inc/models/dnn_model.h src/models/dnn_model.cpp inc/layers/config.h
         inc/layers/loss.h inc/layers/conv_layer.h inc/layers/filter.h inc/layers/max_pool.h
-        inc/layers/fc_layer_mpi.h inc/layers/optimizers_mpi.h inc/models/dnn_model_mpi.h)
+        inc/layers/fc_layer_mpi.h inc/layers/optimizers_mpi.h
+        inc/layers/acivations_mpi.h inc/mpi/serialization_config.h)
 
 find_package(MPI REQUIRED) #make it REQUIRED, if you want
 include_directories(SYSTEM ${MPI_INCLUDE_PATH})

@@ -8,113 +8,15 @@
 #include <fstream>
 #include <boost/mpi/collectives/scatter.hpp>
 #include <boost/mpi/collectives/broadcast.hpp>
-#include "models/dnn_model_mpi.h"
+#include "layers/fc_layer_mpi.h"
+#include "layers/loss.h"
+#include "mpi/serialization_config.h"
+#include "mpi/dnn_model_cached.h"
 
 //#include "layers/filter.h"
 
-
-
-namespace boost { namespace serialization {
-
-        template<class Archive>
-        inline void serialize(Archive & ar,
-                              md & matrix,
-                              const unsigned int version)
-        {
-            size_t rows = matrix.rows();
-            size_t cols = matrix.cols();
-            ar & make_nvp("rows", rows);
-            ar & make_nvp("cols", cols);
-            matrix.resize(rows, cols);
-            for(int r = 0; r < rows; ++r)
-                for(int c = 0; c < cols; ++c)
-                    ar & make_nvp("val", matrix(r,c));
-        }
-
-        template<class Archive>
-        inline void serialize(Archive & ar,
-                              Activation & act,
-                              const unsigned int version)
-        {
-            ar & act.type;
-        }
-
-        template<class Archive>
-        inline void serialize(Archive & ar,
-                              ActivationWrapper & act,
-                              const unsigned int version)
-        {
-            ar & act.type;
-            ar & act.wrapper;
-        }
-        template<class Archive>
-        inline void serialize(Archive & ar,
-                              std::vector<md> & vec,
-                              const unsigned int version)
-        {
-            for (auto &item: vec){
-                ar & item;
-            }
-        }
-
-        template<class Archive>
-        inline void serialize(Archive & ar,
-                              std::vector<md*> & vec,
-                              const unsigned int version)
-        {
-            for (auto &item: vec){
-                ar & item;
-            }
-        }
-
-        template<class Archive>
-        inline void serialize(Archive & ar,
-                              BasicOptimizer & opt,
-                              const unsigned int version)
-        {
-            ar & opt.type;
-            std::vector<std::vector<md *>> layers_params = opt.get_matrices_def();
-            std::vector<std::vector<md>> opt_caches = opt.get_matrices_ndef();
-            std::vector<double> opt_hparams = opt.get_hparams_();
-
-            for ( auto& vect_param: layers_params){
-                ar & vect_param;
-            }
-
-            for ( auto& vect_cache: opt_caches){
-                ar & vect_cache;
-            }
-
-            for ( auto& hparam: opt_hparams){
-                ar & hparam;
-            }
-        }
-
-
-
-        template<class Archive>
-        inline void serialize(Archive & ar,
-                              FCLayer & layer,
-                              const unsigned int version)
-        {
-            ar & layer.W;
-            ar & layer.b;
-            ar & layer.A_prev;
-            ar & layer.Z;
-            ar & layer.dW;
-            ar & layer.db;
-            ar & layer.input_size;
-            ar & layer.output_size;
-            ar & layer.stddev;
-            ar & layer.initialization;
-            ar & layer.activation;
-            ar & layer.optimizer;
-
-        }
-
-    }} // namespace boost::serialization
-
-    
+#define FORWARD_TAG 0
+#define BACKWARD_TAG 1
 namespace mpi = boost::mpi;
 
 std::pair<md, md> read_file_data(std::fstream *in_file){
@@ -155,7 +57,7 @@ std::vector<md> pre_process_data(){
 }
 
 
-void test_fc_layer_mpi(int argc, char *argv[]){
+void test_algorithm(int argc, char *argv[]){
     mpi::environment env(argc, argv);
     mpi::communicator world;
     bool is_generator = world.rank() > 0;
@@ -164,15 +66,93 @@ void test_fc_layer_mpi(int argc, char *argv[]){
     FCLayer layer;
     int epochs;
     std::vector<FCLayer> layers;
-    bool stage_identifier_forward = true;
+    int rank = world.rank();
+    int N = world.size();
+    int inp_data;
+    std::vector<int> v_temp(N);
 
+    bool stage_identifier_forward = true;
+    if (world.rank() == 0){
+        int x_start = 228;
+        int y_end = 1488;
+        v_temp[1] = x_start; v_temp[N-1] = y_end;
+        mpi::scatter(world, v_temp, inp_data, 0);
+    }else{
+
+        int x;
+        int y;
+        int dA;
+        int Y_out;
+
+        // Get initial data for first and last layer
+        mpi::scatter(world, v_temp, inp_data, 0);
+        if (rank == 1){
+            x = inp_data;
+        }
+        if (rank == N - 1){
+            Y_out = inp_data;
+        }
+
+
+        for (int e=0; e < 10; e++){
+            // FORWARD
+            if (rank != 1){
+                world.recv(rank-1, FORWARD_TAG, x);
+            }
+            y = x+2;
+            std::cout << y << "  -rank(forw)= " << rank << std::endl;
+            if (rank != N-1){
+                world.send(rank+1, FORWARD_TAG, y);
+            }
+
+            // BACKWARD
+            if (rank != N-1){
+                world.recv(rank+1, BACKWARD_TAG, dA);
+            }
+            if (rank == N-1){
+                dA = Y_out - y;
+            }
+            dA -= 5;
+            std::cout << dA << "  -rank(backw)= " << rank << std::endl;
+            if (rank != 1){
+                world.send(rank-1, BACKWARD_TAG, dA);
+            }
+        }
+    }
+}
+
+
+
+void test_fc_layer_mpi(int argc, char *argv[],
+                       const ModelCached& model){
+    mpi::environment env(argc, argv);
+    mpi::communicator world;
+    FCLayer layer;
+    int epochs = model.epochs;
+    int rank = world.rank();
+    int N = world.size();
+    std::vector<FCLayer> layers(N);
+    md inp_data;
+    std::vector<md> v_temp(N);
+    std::string loss_type;
+    std::vector<int> layers_in_sizes(N);
+    std::vector<int> layers_out_sizes(N);
+    std::vector<std::string> layers_activations(N);
+    std::vector<std::string> layers_normalizations(N);
+    int in_size;
+    int out_size;
+    std::string activation_type;
+    std::string normalization_type;
+    LossWrapper loss = LossWrapper(loss_type);
+    FCLayer temp_layer = model.layers[N-1];
+
+//    double learning_rate;
+
+
+    bool stage_identifier_forward = true;
     if (world.rank() == 0){
         // get data
-        auto data = pre_process_data();
-        auto X_train = data[0];
-        auto X_test = data[1];
-        auto Y_train = data[2];
-        auto Y_test = data[3];
+
 
         // initialize hyper parameters
         // L - number of layers
@@ -186,132 +166,83 @@ void test_fc_layer_mpi(int argc, char *argv[]){
         }
         std::string loss_type = "BinaryCrossEntropy";
 
+        layers_in_sizes[1] = X_train.rows(); layers_out_sizes[1] = 10;
+        layers_in_sizes[2] = 10; layers_out_sizes[2] = 20;
+        layers_in_sizes[3] = 20; layers_out_sizes[3] = 20;
+        layers_in_sizes[4] = 20; layers_out_sizes[4] = Y_train.rows();
+        layers_activations[1] = "linear";
+        layers_activations[2] = "tanh";
+        layers_activations[3] = "relu";
+        layers_activations[4] = "sigmoid";
+        layers_normalizations[1] = "he";
+        layers_normalizations[2] = "he";
+        layers_normalizations[3] = "he";
+        layers_normalizations[4] = "he";
 
-        // specify layers
-        auto l1 =  FCLayer(X_train.rows(), 10, "linear", ops[0], "he", 1);
-        auto l2 = FCLayer(10, 20, "tanh", ops[1], "he",1);
-        auto l3 = FCLayer(20, 20, "relu",ops[2], "he",1);
-        auto l4 =  FCLayer(20, Y_train.rows(), "sigmoid",ops[3], "he",1);
-
-        // Use MPI to pass layer to its respective process
-        // Example: layer(1) should be passed to rank(1)
-        // General rank(0) is used for combining results
-
-        // We use L+1 because of passing useless layers[0] to rank(0)
-        std::vector<FCLayer> layers(L+1);
-        layers[0] = l1;
-        layers[1] = l1;
-        layers[2] = l2;
-        layers[3] = l3;
-        layers[4] = l4;
-        mpi::scatter(world, layers, layer, 0);
+        v_temp[1] = X_train; v_temp[N-1] = Y_train;
+        mpi::scatter(world, layers_in_sizes, in_size,0);
+        mpi::scatter(world, layers_out_sizes, out_size,0);
+        mpi::scatter(world, layers_activations, activation_type,0);
+        mpi::scatter(world, layers_normalizations, normalization_type,0);
         mpi::broadcast(world, epochs, 0);
-        mpi::request reqs[3];
-        reqs[0] = world.isend(1, 3, X_train);
-        reqs[1] = world.isend(world.size()-1, 2, Y_train);
-        reqs[2] = world.isend(world.size()-1, 4, loss_type);
-        mpi::wait_all(reqs, reqs+3);
-        std::cout << "DONE SENDING INITIAL DATA" << std::endl;
+        mpi::broadcast(world, learning_rate, 0);
 
-
+        mpi::broadcast(world, loss_type, 0);
+        mpi::scatter(world, v_temp, inp_data, 0);
 
     }else{
-        mpi::scatter(world, layers, layer, 0);
-        mpi::broadcast(world, epochs, 0);
+
         md AL;
         md X;
         md Y;
-        LossWrapper loss;
-        std::string loss_type;
+        md dA;
+        md Y_out;
 
-        if (slaves.rank() == 0){
-            mpi::request reqs[1];
-            reqs[0] = world.irecv(0, 3, X);
-            mpi::wait_all(reqs, reqs+1);
+        // Get initial data for layers
+        mpi::scatter(world, layers_in_sizes, in_size,0);
+        mpi::scatter(world, layers_out_sizes, out_size,0);
+        mpi::scatter(world, layers_activations, activation_type,0);
+        mpi::scatter(world, layers_normalizations, normalization_type,0);
+        mpi::broadcast(world, epochs, 0);
+        mpi::broadcast(world, learning_rate, 0);
+        mpi::broadcast(world, loss_type, 0);
+        mpi::scatter(world, v_temp, inp_data, 0);
+        if (rank == 1){
+            X = inp_data;
         }
-        if (slaves.rank() == slaves.size() - 1){
-            mpi::request reqs[2];
-            reqs[0] = world.irecv(0, 2, Y);
-            reqs[1] = world.irecv(0, 4, loss_type);
-            mpi::wait_all(reqs, reqs+2);
-
-        }
-        if (slaves.rank() == slaves.size() - 1){
+        if (rank == N - 1){
             loss = LossWrapper(loss_type);
+            Y_out = inp_data;
         }
-
-        for (int e=0; e < 2*epochs; ++e){
-            slaves.barrier();
-            std::cout << e << std::endl;
-
-            if (stage_identifier_forward){
-                if (slaves.rank() != 0){
-                    slaves.recv(slaves.rank()-1, 1, X);
-                }
-                std::cerr << "s1" << std::endl;
-                if (slaves.rank() == 1){
-                    std::cerr << "WAS" << std::endl;
-                    std::cerr << X << std::endl;
-                }
-                AL = layer.forward(X);
-                std::cerr << "s2" << std::endl;
-
-                if (slaves.rank() != slaves.size() - 1){
-                    slaves.send(slaves.rank()+1, 1, AL);
-                }
-                stage_identifier_forward = !stage_identifier_forward;
-
-            }else{
-                md dA;
-                if (slaves.rank() != slaves.size() - 1){
-                    slaves.recv(slaves.rank()+1, 2, dA);
-
-                }else{
-                    std::cerr << "h1" << std::endl;
-                    dA = loss.get_loss_backward(AL, Y);
-                    std::cerr << "h2" << std::endl;
-
-                }
-                std::cerr << "h3" << std::endl;
-                dA = layer.backward(dA);
-                std::cerr << "h4" << std::endl;
-
-                layer.update_parameters(1);
-                std::cerr << "h5" << std::endl;
+        layer = FCLayer(in_size, out_size, activation_type, SGD(learning_rate), normalization_type);
+        layer.initialize_parameters();
 
 
-                if (slaves.rank() != 0){
-                    slaves.send(slaves.rank()-1, 2, dA);
-                }
-                stage_identifier_forward = !stage_identifier_forward;
+        for (int e=0; e < epochs; e++){
+            // FORWARD
+            if (rank != 1){
+                world.recv(rank-1, FORWARD_TAG, X);
+            }
+            AL = layer.forward(X);
 
-
+            if (rank != N-1){
+                world.send(rank+1, FORWARD_TAG, AL);
             }
 
+            // BACKWARD
+            if (rank != N-1){
+                world.recv(rank+1, BACKWARD_TAG, dA);
+            }
+            if (rank == N-1){
+                dA = loss.get_loss_backward(AL, Y_out);
+            }
+            dA = layer.backward(dA);
+            layer.update_parameters(1);
+            if (rank != 1){
+                world.send(rank-1, BACKWARD_TAG, dA);
+            }
         }
-
     }
-
-
-
-
-//    auto op = new SGD(0.01);
-//    model->fit_data_parallel(X_train, Y_train, 10, true);
-
-
-
-
-//    auto model = new Model{};
-//    model->add(l1);
-//    model->add(l2);
-//    model->add(l3);
-//    model->add(l4);
-//    auto op = new Adam(0.01);
-//    auto loss = new BinaryCrossEntropy();
-//    model->compile(loss);
-//    model->fit(X_train, Y_train, 10, true, 24);
-//    auto res = model->evaluate(X_test, Y_test);
-//    std::cout << "Test accuracy = " << std::to_string(res) << std::endl;
 
 }
 
@@ -320,7 +251,27 @@ void test_fc_layer_mpi(int argc, char *argv[]){
 
 
 int main(int argc, char **argv) {
+    std::string cache_fname = "/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cache/dnn_cache.txt";
+    auto op = SGD(0.05);
+    auto data = pre_process_data();
+    auto X_train = data[0];
+    auto X_test = data[1];
+    auto Y_train = data[2];
+    auto Y_test = data[3];
+    auto l1 = FCLayer(X_train.rows(), 10, "linear","he", 1);
+    auto l2 = FCLayer(10, 20, "tanh","he",1);
 
-    test_fc_layer_mpi(argc, argv);
+    auto l3 = FCLayer(20, 20, "relu","he",1);
+    auto l4 = FCLayer(20, Y_train.rows(), "sigmoid","he",1);
+    auto model = ModelCached(op, "BinaryCrossEntropy");
+    model.add(l1);
+    model.add(l2);
+    model.add(l3);
+    model.add(l4);
+    model.fit_cached(X_train, Y_train, 10, cache_fname);
+//    auto res = model->evaluate(X_test, Y_test);
+//    test_algorithm(argc, argv);
+
+    test_fc_layer_mpi(argc, argv, model);
 
 }
