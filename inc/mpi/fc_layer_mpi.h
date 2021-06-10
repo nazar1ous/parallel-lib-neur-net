@@ -2,16 +2,16 @@
 #include <iostream>
 #include <Eigen/Dense>
 #include <cmath>
-#include "layers/acivations_mpi.h"
+#include "acivations_mpi.h"
 #include <random>
 #include <ctime>
 #include <unordered_map>
-#include "layers/optimizers_mpi.h"
+#include "optimizers_mpi.h"
 
 
 class FCLayer{
 public:
-    ActivationWrapper* activation;
+    ActivationWrapper* activation{};
     BasicOptimizer optimizer{};
     size_t input_size{};
     size_t output_size{};
@@ -51,8 +51,6 @@ public:
     md forward(const md& X){
         A_prev = X;
         Z = linear_forward(X);
-        md temp = activation->activate_forward(Z);
-        std::cerr << "SUKA" << temp << std::endl;
         return activation->activate_forward(Z);
     }
 
@@ -91,6 +89,19 @@ public:
 
     std::vector<md> get_matrices_(){
         return std::vector<md>{dW, db, W, b, A_prev, Z};
+    }
+
+    void _update_from(const FCLayer& copy){
+        this->W = md(copy.W);
+        this->b = md(copy.b);
+        this->A_prev = md(copy.A_prev);
+        this->dW = md(copy.dW);
+        this->db = md(copy.db);
+        this->Z = md(copy.Z);
+        this->input_size = copy.input_size;
+        this->output_size = copy.output_size;
+
+
     }
 
 };

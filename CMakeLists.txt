@@ -25,23 +25,31 @@ include_directories(inc/eigen-3.3.9 inc src)
 add_library(liba STATIC inc/layers/fc_layer.h src/layers/fc_layer.cpp inc/layers/activations.h
         inc/layers/optimizers.h inc/models/dnn_model.h src/models/dnn_model.cpp inc/layers/config.h
         inc/layers/loss.h inc/layers/conv_layer.h inc/layers/filter.h inc/layers/max_pool.h
-        inc/layers/fc_layer_mpi.h inc/layers/optimizers_mpi.h
-        inc/layers/acivations_mpi.h inc/mpi/serialization_config.h)
+        inc/mpi/fc_layer_mpi.h inc/mpi/optimizers_mpi.h
+        inc/mpi/acivations_mpi.h inc/mpi/serialization_config.h)
 
 find_package(MPI REQUIRED) #make it REQUIRED, if you want
 include_directories(SYSTEM ${MPI_INCLUDE_PATH})
-add_executable(parallel_neural_net_lib src/main.cpp)
-target_link_libraries(parallel_neural_net_lib liba)
+#add_executable(parallel_neural_net_lib src/main_tutorial_mpi.cpp)
+add_executable(parallel_neural_net_lib_mpi src/main_tutorial_mpi.cpp)
 
-set(ALL_TARGETS liba parallel_neural_net_lib)
 
-target_link_libraries(parallel_neural_net_lib Boost::program_options Boost::mpi Boost::serialization)
+#target_link_libraries(parallel_neural_net_lib liba)
+#
+#set(ALL_TARGETS liba parallel_neural_net_lib)
+
+
+target_link_libraries(parallel_neural_net_lib_mpi liba)
+
+set(ALL_TARGETS liba parallel_neural_net_lib_mpi)
+
+target_link_libraries(parallel_neural_net_lib_mpi Boost::program_options Boost::mpi Boost::serialization)
 target_link_libraries(liba Boost::program_options Boost::mpi Boost::serialization)
-target_link_libraries(parallel_neural_net_lib ${Boost_LIBRARIES})
+target_link_libraries(parallel_neural_net_lib_mpi ${Boost_LIBRARIES})
 target_link_libraries(liba ${Boost_LIBRARIES})
-target_link_libraries(parallel_neural_net_lib ${MPI_C_LIBRARIES})
+target_link_libraries(parallel_neural_net_lib_mpi ${MPI_C_LIBRARIES})
 target_link_libraries(liba ${MPI_C_LIBRARIES})
-target_link_libraries(parallel_neural_net_lib MPI::MPI_CXX)
+target_link_libraries(parallel_neural_net_lib_mpi MPI::MPI_CXX)
 target_link_libraries(liba MPI::MPI_CXX)
 
 
