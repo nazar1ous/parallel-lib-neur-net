@@ -70,14 +70,14 @@ public:
 
 class LossWrapper: public Loss{
 private:
-    Loss *wrapper;
+    Loss *wrapper{};
     void builder(){
         auto value = this->type;
-        if (value == "MSE"){
+        if (value == "mse"){
             wrapper = new MSE{};
-        }else if (value == "BinaryCrossEntropy"){
+        }else if (value == "binarycrossentropy"){
             wrapper = new BinaryCrossEntropy{};
-        }else if (value == "CategoricalCrossEntropy") {
+        }else if (value == "categoricalcrossentropy") {
             wrapper = new CategoricalCrossEntropy{};
         }else{
                 std::cerr << "Not implemented type of Loss function";
@@ -97,4 +97,6 @@ public:
     md get_loss_backward(const md& AL, const md& Y) override{
         return wrapper->get_loss_backward(AL, Y);
     }
+
+    LossWrapper()= default;
 };
