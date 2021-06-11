@@ -7,7 +7,7 @@
 
 #include "layers/config.h"
 #include <unordered_map>
-#include "layers/loss.h"
+#include "mpi/loss_mpi.h"
 #include <fstream>
 #include <boost/mpi/environment.hpp>
 #include <boost/mpi/communicator.hpp>
@@ -138,8 +138,8 @@ void run_fit(int argc, char *argv[],
             world.recv(rank+1, BACKWARD_TAG, dA);
         }
         if (rank == N-1){
-
             dA = loss.get_loss_backward(AL, Y_out);
+
 
         }
         dA = layer.backward(dA);
