@@ -1,0 +1,2 @@
+/usr/bin/ar qc libliba_single_process_dnn.a CMakeFiles/liba_single_process_dnn.dir/src/layers/fc_layer.cpp.o CMakeFiles/liba_single_process_dnn.dir/src/models/dnn_model.cpp.o
+/usr/bin/ranlib libliba_single_process_dnn.a

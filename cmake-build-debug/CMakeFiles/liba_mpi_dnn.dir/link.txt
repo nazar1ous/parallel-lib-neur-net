@@ -1,0 +1,2 @@
+/usr/bin/ar qc libliba_mpi_dnn.a CMakeFiles/liba_mpi_dnn.dir/src/models/dnn_model.cpp.o
+/usr/bin/ranlib libliba_mpi_dnn.a
