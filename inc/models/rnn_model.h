@@ -46,31 +46,7 @@ public:
         return str_vec;
     }
 
-    std::unordered_map<std::string, md> clip(std::unordered_map<std::string, md> gradients, double max_value) {
-        std::unordered_map<std::string, md> new_gradient;
-        auto dWaa = gradients["dWaa"];
-        auto dWax = gradients["dWax"];
-        auto dWya = gradients["dWya"];
-        auto db = gradients["db"];
-        auto dby = gradients["dby"];
-        std::vector<md> a = {dWaa, dWax, dWya, db, dby};
 
-        for (int k=0; k < a.size(); k++) {
-            for (int i=0; i < a[k].rows(); i++) {
-                for (int j=0; j < a[k].cols(); j++){
-                    if (a[k](i, j) > max_value) {
-                        a[k](i, j) = max_value;
-                    }
-                    if (a[k](i, j) < -max_value) {
-                        a[k](i, j) = -max_value;
-                    }
-                }
-            }
-        }
-        new_gradient.insert({{"dWaa", a[0]}, {"dWax", a[1]}, {"dWya", a[2]},
-                             {"db", a[3]}, {"dby", a[4]}});
-        return new_gradient;
-    }
 
 
     std::tuple<double, std::unordered_map<std::string, md>, md> optimize(std::vector<int> X, std::vector<int> Y,
@@ -85,7 +61,7 @@ public:
         auto gradients = backward_pair.first;
         auto a = backward_pair.second;
 
-        auto clipped_gradients = clip(gradients, 5);
+        auto clipped_gradients = layer->clip(gradients, 5);
 
         this->layer->update_parameters(clipped_gradients, learning_rate);
 

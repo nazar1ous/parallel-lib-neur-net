@@ -9,6 +9,7 @@
 #include <random>
 #include <ctime>
 #include <unordered_map>
+#include <omp.h>
 
 
 class RLayer {
@@ -83,6 +84,7 @@ public:
         md vb = md::Zero(b.rows(), a_prev.cols());
         md vby = md::Zero(by.rows(), a_prev.cols());
 
+        #pragma omp parallel for
         for (int i=0; i < a_prev.cols(); i++) {
             vb.col(i) += b.col(0);
             vby.col(i) += by.col(0);
@@ -156,6 +158,7 @@ public:
         gradients.insert({{"dWaa", dWaa}, {"dWax", dWax}, {"dWya", dWya},
                           {"db", db}, {"dby", dby}, {"da_next", da_next}});
 
+        #pragma omp parallel for
         for (int t = X.size()-1; t > -1; t--) {
             md dy = y_hat[t];
             dy(Y[t], 0) -= 1;
@@ -174,6 +177,7 @@ public:
         auto dby = gradients["dby"];
         std::vector<md> a = {dWaa, dWax, dWya, db, dby};
 
+        #pragma omp parallel for
         for (int k=0; k < a.size(); k++) {
             for (int i=0; i < a[k].rows(); i++) {
                 for (int j=0; j < a[k].cols(); j++){
