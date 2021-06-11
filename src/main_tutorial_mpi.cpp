@@ -91,7 +91,7 @@ int main(int argc, char **argv) {
     model.add(l4);
 
     // LEARNING PHASE
-//    model.fit_cached(X_train, Y_train, 10);
+//    model.fit_cached(X_train, Y_train, 2);
 //    run_fit(argc, argv, model, cache_fname);
 
     // EVALUATING PHASE

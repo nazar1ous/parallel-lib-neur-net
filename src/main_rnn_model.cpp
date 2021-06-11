@@ -1,5 +1,4 @@
 #include "models/rnn_model.h"
-#include "layers/loss.h"
 
 
 int main(int argc, char **argv) {

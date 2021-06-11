@@ -41,6 +41,8 @@ public:
     std::vector<std::unordered_map<std::string, md>> caches;
     Loss* loss{};
     std::vector<std::pair<md, md>> layers_grads;
+    const std::string dW_s = "dW";
+    const std::string db_s = "db";
 
     explicit Model(std::vector<FCLayer*>& layers){
         this->layers = layers;
@@ -159,20 +161,20 @@ public:
                 auto m = X.cols();
                 if (b == 0){
                     for (int l = 0; l < L; ++l){
-                        layers_grads[l] = std::make_pair(m*caches[l]["dW"],
-                                                         m*caches[l]["db"]);
+                        layers_grads[l] = std::make_pair(m*caches[l][dW_s],
+                                                         m*caches[l][db_s]);
                     }
                 }else{
                     for (int l = 0; l < L; ++l){
-                        layers_grads[l].first += m*caches[l]["dW"];
-                        layers_grads[l].second += m*caches[l]["db"];
+                        layers_grads[l].first += m*caches[l][dW_s];
+                        layers_grads[l].second += m*caches[l][db_s];
                     }
                 }
             }
             // Accumulative gradient
             for (int l = 0; l < L; ++l){
-                caches[l]["dW"] = layers_grads[l].first/Y_train.cols();
-                caches[l]["db"] = layers_grads[l].second/Y_train.cols();
+                caches[l][dW_s] = layers_grads[l].first/Y_train.cols();
+                caches[l][db_s] = layers_grads[l].second/Y_train.cols();
             }
 
             update_parameters(1);

@@ -24,7 +24,7 @@ int main(int argc, char **argv) {
     auto op = new SGD(0.01);
     auto loss = new BinaryCrossEntropy();
     model->compile(loss, op);
-    model->fit(X_train, Y_train, 10, true, Y_train.cols());
+    model->fit(X_train, Y_train, 2, true, 24);
     auto res = model->evaluate(X_test, Y_test);
     std::cout << "Test accuracy = " << std::to_string(res) << std::endl;
 

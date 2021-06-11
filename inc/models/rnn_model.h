@@ -10,6 +10,7 @@
 #include "layers/config.h"
 #include <unordered_map>
 #include <fstream>
+#include "layers/loss.h"
 
 
 class RNNModel {
