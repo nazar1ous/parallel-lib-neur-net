@@ -1,44 +1,65 @@
 #include <iostream>
 #include <boost/program_options.hpp>
 #include <omp.h>
-//#include <bits/stdc++.h>
 #include <Eigen/Dense>
 #include "models/dnn_model.h"
 #include "layers/config.h"
+#include "models/rnn_model.h"
 #include <fstream>
 #include "layers/filter.h"
 
 
-std::pair<md, md> read_file_data(std::fstream *in_file){
-    std::string temp;
-    *in_file >> temp;
-    auto n_x = std::stoi(temp);
-    *in_file >> temp;
-    auto m = std::stoi(temp);
-    md X(n_x, m);
-    md Y(1, m);
+//std::pair<md, md> read_file_data(std::fstream *in_file){
+//    std::string temp;
+//    *in_file >> temp;
+//    auto n_x = std::stoi(temp);
+//    *in_file >> temp;
+//    auto m = std::stoi(temp);
+//    md X(n_x, m);
+//    md Y(1, m);
+//
+//    for (int sample = 0; sample < m; sample++){
+//        *in_file >> temp;
+//        Y(0, sample) = std::stod(temp);
+//        for (int x = 0; x < n_x; ++x){
+//            *in_file >> temp;
+//            X(x, sample) = std::stod(temp);
+//        }
+//    }
+//
+//    return std::make_pair(X, Y);
+//}
 
-    for (int sample = 0; sample < m; sample++){
-        *in_file >> temp;
-        Y(0, sample) = std::stod(temp);
-        for (int x = 0; x < n_x; ++x){
-            *in_file >> temp;
-            X(x, sample) = std::stod(temp);
-        }
-    }
 
-    return std::make_pair(X, Y);
+
+void test_rnn_basic() {
+    std::unordered_map<int, char> ix_to_char = {{0, '\n'}, {1, 'a'}, {2, 'b'}, {3, 'c'},
+                                                {4, 'd'}, {5, 'e'}, {6, 'f'}, {7, 'g'},
+                                                {8, 'h'}, {9, 'i'}, {10, 'j'}, {11, 'k'},
+                                                {12, 'l'}, {13, 'm'}, {14, 'n'}, {15, 'o'},
+                                                {16, 'p'}, {17, 'q'}, {18, 'r'}, {19, 's'},
+                                                {20, 't'}, {21, 'u'}, {22, 'v'}, {23, 'w'},
+                                                {24, 'x'}, {25, 'y'}, {26, 'z'}};
+    std::unordered_map<char, int> char_to_ix = {{'\n', 0}, {'a', 1}, {'b', 2}, {'c', 3},
+                                                {'d', 4}, {'e', 5}, {'f', 6}, {'g', 7},
+                                                {'h', 8}, {'i', 9}, {'j', 10}, {'k', 11},
+                                                {'l', 12}, {'m', 13}, {'n', 14}, {'o', 15},
+                                                {'p', 16}, {'q', 17}, {'r', 18}, {'s', 19},
+                                                {'t', 20}, {'u', 21}, {'v', 22}, {'w', 23},
+                                                {'x', 24}, {'y', 25}, {'z', 26}};
+
+    RLayer rec_layer = RLayer(50, 27, 27, "tanh", "softmax", "he");
+
+    RNNModel model = RNNModel(&rec_layer, char_to_ix, ix_to_char);
+
+    auto loss = new BinaryCrossEntropy();
+
+    auto parameters = model.train("dinos.txt", loss, 24000, true);
+
+    model.sample(parameters);
 }
 
-void test_fc_layer_basic(){
-    Filter3D f(3, 3);
-    f.initialize_parameters();
-
-
-//    Filter3D f(3, 3);
-//    f.initialize_parameters();
-//    std::cout << f.W << std::endl;
-
+//void test_fc_layer_basic(){
 //    std::fstream in_file("./tests/gen_data/cpp_dataset.txt");
 //    auto data = read_file_data(&in_file);
 //    md X = data.first;
@@ -50,12 +71,12 @@ void test_fc_layer_basic(){
 //
 //    md X_test = X.block(0, X.cols() - diff, X.rows(), diff)/255;
 //    md Y_test = Y.block(0, Y.cols() - diff, Y.rows(), diff);
-
-    //    auto op = new SGD(0.01);
+//
+//    auto op = new SGD(0.01);
 //    model->fit_data_parallel(X_train, Y_train, 10, true);
-
-
-
+//
+//
+//
 //    auto l1 = new FCLayer(X.rows(), 10, "linear", "he");
 //    auto l2 = new FCLayer(10, 20, "tanh", "he");
 //
@@ -72,8 +93,7 @@ void test_fc_layer_basic(){
 //    model->fit(X_train, Y_train, 10, true, 24);
 //    auto res = model->evaluate(X_test, Y_test);
 //    std::cout << "Test accuracy = " << std::to_string(res) << std::endl;
-
-}
+//}
 
 
 
@@ -81,6 +101,7 @@ void test_fc_layer_basic(){
 
 int main(int argc, char **argv) {
 
-    test_fc_layer_basic();
+//    test_fc_layer_basic();
+    test_rnn_basic();
 
 }

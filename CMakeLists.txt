@@ -18,7 +18,7 @@ option(ENABLE_SANITIZERS    "Use sanitizers to detect errors."      OFF) # Optio
 include_directories(inc/eigen-3.3.9 inc src)
 add_library(liba STATIC inc/layers/fc_layer.h src/layers/fc_layer.cpp inc/layers/activations.h
         inc/layers/optimizers.h inc/models/dnn_model.h src/models/dnn_model.cpp inc/layers/config.h
-        inc/layers/loss.h inc/layers/conv_layer.h inc/layers/filter.h inc/layers/max_pool.h)
+        inc/layers/loss.h inc/layers/conv_layer.h inc/layers/filter.h inc/layers/max_pool.h inc/layers/rec_layer.h inc/models/rnn_model.h)
 
 
 add_executable(parallel_neural_net_lib src/main.cpp)
