@@ -36,14 +36,21 @@ add_library(liba_single_process_dnn STATIC inc/layers/fc_layer.h src/layers/fc_l
         inc/layers/optimizers.h inc/models/dnn_model.h src/models/dnn_model.cpp inc/layers/config.h
         inc/layers/loss.h src/models/dnn_model.cpp inc/process_data/process_data.h)
 
+add_library(liba_single_process_rnn STATIC inc/layers/fc_layer.h src/layers/fc_layer.cpp inc/layers/activations.h
+        inc/layers/optimizers.h inc/models/rnn_model.h src/models/dnn_model.cpp inc/layers/config.h
+        inc/layers/loss.h src/models/dnn_model.cpp inc/process_data/process_data.h inc/layers/rec_layer.h)
+
+
 add_executable(dnn_model_single_process src/main_single_process.cpp)
 add_executable(dnn_model_data_parallel src/main_data_parallel.cpp)
-
+add_executable(dnn_model_rnn src/main_rnn_model.cpp)
 add_executable(dnn_model_mpi src/main_tutorial_mpi.cpp)
 
 target_link_libraries(dnn_model_single_process liba_single_process_dnn)
 target_link_libraries(dnn_model_data_parallel liba_single_process_dnn)
 target_link_libraries(dnn_model_mpi liba_mpi_dnn)
+target_link_libraries(dnn_model_rnn liba_single_process_rnn)
+
 
 
 target_link_libraries(liba_mpi_dnn Boost::program_options Boost::mpi Boost::serialization)
@@ -64,7 +71,7 @@ if (OPENMP_FOUND)
 endif()
 
 
-set(ALL_TARGETS liba_mpi_dnn dnn_model_mpi dnn_model_single_process dnn_model_mpi dnn_model_data_parallel)
+set(ALL_TARGETS liba_mpi_dnn dnn_model_mpi dnn_model_single_process dnn_model_mpi dnn_model_data_parallel dnn_model_rnn)
 
 
 

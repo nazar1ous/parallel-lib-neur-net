@@ -27,18 +27,17 @@
 					<DistClean command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="liba_mpi_dnn">
-				<Option output="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/libliba_mpi_dnn.a" prefix_auto="0" extension_auto="0"/>
+			<Target title="dnn_model_rnn">
+				<Option output="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/dnn_model_rnn" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug"/>
 				<Option object_output="./"/>
-				<Option type="2"/>
+				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add option="-DBOOST_ALL_NO_LIB"/>
+					<Add directory="/usr/include"/>
 					<Add directory="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/inc/eigen-3.3.9"/>
 					<Add directory="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/inc"/>
 					<Add directory="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/src"/>
-					<Add directory="/usr/include"/>
 					<Add directory="/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi"/>
 					<Add directory="/usr/lib/x86_64-linux-gnu/openmpi/include"/>
 					<Add directory="/usr/include/c++/9"/>
@@ -49,24 +48,23 @@
 					<Add directory="/usr/include/x86_64-linux-gnu"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 liba_mpi_dnn"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 dnn_model_rnn"/>
 					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="liba_mpi_dnn/fast">
-				<Option output="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/libliba_mpi_dnn.a" prefix_auto="0" extension_auto="0"/>
+			<Target title="dnn_model_rnn/fast">
+				<Option output="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/dnn_model_rnn" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug"/>
 				<Option object_output="./"/>
-				<Option type="2"/>
+				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add option="-DBOOST_ALL_NO_LIB"/>
+					<Add directory="/usr/include"/>
 					<Add directory="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/inc/eigen-3.3.9"/>
 					<Add directory="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/inc"/>
 					<Add directory="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/src"/>
-					<Add directory="/usr/include"/>
 					<Add directory="/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi"/>
 					<Add directory="/usr/lib/x86_64-linux-gnu/openmpi/include"/>
 					<Add directory="/usr/include/c++/9"/>
@@ -77,7 +75,61 @@
 					<Add directory="/usr/include/x86_64-linux-gnu"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 liba_mpi_dnn/fast"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 dnn_model_rnn/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="dnn_model_data_parallel">
+				<Option output="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/dnn_model_data_parallel" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include"/>
+					<Add directory="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/inc/eigen-3.3.9"/>
+					<Add directory="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/inc"/>
+					<Add directory="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/src"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/openmpi/include"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 dnn_model_data_parallel"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="dnn_model_data_parallel/fast">
+				<Option output="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/dnn_model_data_parallel" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include"/>
+					<Add directory="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/inc/eigen-3.3.9"/>
+					<Add directory="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/inc"/>
+					<Add directory="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/src"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/openmpi/include"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 dnn_model_data_parallel/fast"/>
 					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
@@ -203,6 +255,116 @@
 					<DistClean command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
+			<Target title="liba_mpi_dnn">
+				<Option output="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/libliba_mpi_dnn.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DBOOST_ALL_NO_LIB"/>
+					<Add directory="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/inc/eigen-3.3.9"/>
+					<Add directory="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/inc"/>
+					<Add directory="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/src"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/openmpi/include"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 liba_mpi_dnn"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="liba_mpi_dnn/fast">
+				<Option output="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/libliba_mpi_dnn.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DBOOST_ALL_NO_LIB"/>
+					<Add directory="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/inc/eigen-3.3.9"/>
+					<Add directory="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/inc"/>
+					<Add directory="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/src"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/openmpi/include"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 liba_mpi_dnn/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="liba_single_process_rnn">
+				<Option output="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/libliba_single_process_rnn.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include"/>
+					<Add directory="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/inc/eigen-3.3.9"/>
+					<Add directory="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/inc"/>
+					<Add directory="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/src"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/openmpi/include"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 liba_single_process_rnn"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="liba_single_process_rnn/fast">
+				<Option output="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/libliba_single_process_rnn.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include"/>
+					<Add directory="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/inc/eigen-3.3.9"/>
+					<Add directory="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/inc"/>
+					<Add directory="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/src"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/openmpi/include"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 liba_single_process_rnn/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
 			<Target title="dnn_model_single_process">
 				<Option output="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/dnn_model_single_process" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug"/>
@@ -257,79 +419,36 @@
 					<DistClean command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="dnn_model_data_parallel">
-				<Option output="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/dnn_model_data_parallel" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug"/>
-				<Option object_output="./"/>
-				<Option type="1"/>
-				<Option compiler="gcc"/>
-				<Compiler>
-					<Add directory="/usr/include"/>
-					<Add directory="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/inc/eigen-3.3.9"/>
-					<Add directory="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/inc"/>
-					<Add directory="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/src"/>
-					<Add directory="/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi"/>
-					<Add directory="/usr/lib/x86_64-linux-gnu/openmpi/include"/>
-					<Add directory="/usr/include/c++/9"/>
-					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
-					<Add directory="/usr/include/c++/9/backward"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
-					<Add directory="/usr/local/include"/>
-					<Add directory="/usr/include/x86_64-linux-gnu"/>
-				</Compiler>
-				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 dnn_model_data_parallel"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="dnn_model_data_parallel/fast">
-				<Option output="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/dnn_model_data_parallel" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug"/>
-				<Option object_output="./"/>
-				<Option type="1"/>
-				<Option compiler="gcc"/>
-				<Compiler>
-					<Add directory="/usr/include"/>
-					<Add directory="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/inc/eigen-3.3.9"/>
-					<Add directory="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/inc"/>
-					<Add directory="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/src"/>
-					<Add directory="/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi"/>
-					<Add directory="/usr/lib/x86_64-linux-gnu/openmpi/include"/>
-					<Add directory="/usr/include/c++/9"/>
-					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
-					<Add directory="/usr/include/c++/9/backward"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
-					<Add directory="/usr/local/include"/>
-					<Add directory="/usr/include/x86_64-linux-gnu"/>
-				</Compiler>
-				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 dnn_model_data_parallel/fast"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
 		</Build>
 		<Unit filename="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/inc/layers/activations.h">
 			<Option target="liba_single_process_dnn"/>
+			<Option target="liba_single_process_rnn"/>
 		</Unit>
 		<Unit filename="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/inc/layers/config.h">
-			<Option target="liba_mpi_dnn"/>
 			<Option target="liba_single_process_dnn"/>
+			<Option target="liba_mpi_dnn"/>
+			<Option target="liba_single_process_rnn"/>
 		</Unit>
 		<Unit filename="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/inc/layers/fc_layer.h">
 			<Option target="liba_single_process_dnn"/>
+			<Option target="liba_single_process_rnn"/>
 		</Unit>
 		<Unit filename="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/inc/layers/loss.h">
 			<Option target="liba_single_process_dnn"/>
+			<Option target="liba_single_process_rnn"/>
 		</Unit>
 		<Unit filename="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/inc/layers/optimizers.h">
 			<Option target="liba_single_process_dnn"/>
+			<Option target="liba_single_process_rnn"/>
+		</Unit>
+		<Unit filename="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/inc/layers/rec_layer.h">
+			<Option target="liba_single_process_rnn"/>
 		</Unit>
 		<Unit filename="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/inc/models/dnn_model.h">
 			<Option target="liba_single_process_dnn"/>
+		</Unit>
+		<Unit filename="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/inc/models/rnn_model.h">
+			<Option target="liba_single_process_rnn"/>
 		</Unit>
 		<Unit filename="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/inc/mpi/acivations_mpi.h">
 			<Option target="liba_mpi_dnn"/>
@@ -347,17 +466,22 @@
 			<Option target="liba_mpi_dnn"/>
 		</Unit>
 		<Unit filename="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/inc/process_data/process_data.h">
-			<Option target="liba_mpi_dnn"/>
 			<Option target="liba_single_process_dnn"/>
+			<Option target="liba_mpi_dnn"/>
+			<Option target="liba_single_process_rnn"/>
 		</Unit>
 		<Unit filename="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/inc/time_counting/time_counting.h">
 			<Option target="liba_mpi_dnn"/>
 		</Unit>
 		<Unit filename="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/src/layers/fc_layer.cpp">
 			<Option target="liba_single_process_dnn"/>
+			<Option target="liba_single_process_rnn"/>
 		</Unit>
 		<Unit filename="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/src/main_data_parallel.cpp">
 			<Option target="dnn_model_data_parallel"/>
+		</Unit>
+		<Unit filename="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/src/main_rnn_model.cpp">
+			<Option target="dnn_model_rnn"/>
 		</Unit>
 		<Unit filename="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/src/main_single_process.cpp">
 			<Option target="dnn_model_single_process"/>
@@ -366,8 +490,9 @@
 			<Option target="dnn_model_mpi"/>
 		</Unit>
 		<Unit filename="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/src/models/dnn_model.cpp">
-			<Option target="liba_mpi_dnn"/>
 			<Option target="liba_single_process_dnn"/>
+			<Option target="liba_mpi_dnn"/>
+			<Option target="liba_single_process_rnn"/>
 		</Unit>
 		<Unit filename="/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>

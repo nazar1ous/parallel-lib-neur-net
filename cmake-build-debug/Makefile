@@ -130,17 +130,30 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named liba_mpi_dnn
+# Target rules for targets named dnn_model_rnn
 
 # Build rule for target.
-liba_mpi_dnn: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 liba_mpi_dnn
-.PHONY : liba_mpi_dnn
+dnn_model_rnn: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dnn_model_rnn
+.PHONY : dnn_model_rnn
 
 # fast build rule for target.
-liba_mpi_dnn/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/liba_mpi_dnn.dir/build.make CMakeFiles/liba_mpi_dnn.dir/build
-.PHONY : liba_mpi_dnn/fast
+dnn_model_rnn/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dnn_model_rnn.dir/build.make CMakeFiles/dnn_model_rnn.dir/build
+.PHONY : dnn_model_rnn/fast
+
+#=============================================================================
+# Target rules for targets named dnn_model_data_parallel
+
+# Build rule for target.
+dnn_model_data_parallel: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dnn_model_data_parallel
+.PHONY : dnn_model_data_parallel
+
+# fast build rule for target.
+dnn_model_data_parallel/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dnn_model_data_parallel.dir/build.make CMakeFiles/dnn_model_data_parallel.dir/build
+.PHONY : dnn_model_data_parallel/fast
 
 #=============================================================================
 # Target rules for targets named dnn_model_mpi
@@ -169,6 +182,32 @@ liba_single_process_dnn/fast:
 .PHONY : liba_single_process_dnn/fast
 
 #=============================================================================
+# Target rules for targets named liba_mpi_dnn
+
+# Build rule for target.
+liba_mpi_dnn: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 liba_mpi_dnn
+.PHONY : liba_mpi_dnn
+
+# fast build rule for target.
+liba_mpi_dnn/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/liba_mpi_dnn.dir/build.make CMakeFiles/liba_mpi_dnn.dir/build
+.PHONY : liba_mpi_dnn/fast
+
+#=============================================================================
+# Target rules for targets named liba_single_process_rnn
+
+# Build rule for target.
+liba_single_process_rnn: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 liba_single_process_rnn
+.PHONY : liba_single_process_rnn
+
+# fast build rule for target.
+liba_single_process_rnn/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/liba_single_process_rnn.dir/build.make CMakeFiles/liba_single_process_rnn.dir/build
+.PHONY : liba_single_process_rnn/fast
+
+#=============================================================================
 # Target rules for targets named dnn_model_single_process
 
 # Build rule for target.
@@ -181,19 +220,6 @@ dnn_model_single_process/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/dnn_model_single_process.dir/build.make CMakeFiles/dnn_model_single_process.dir/build
 .PHONY : dnn_model_single_process/fast
 
-#=============================================================================
-# Target rules for targets named dnn_model_data_parallel
-
-# Build rule for target.
-dnn_model_data_parallel: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dnn_model_data_parallel
-.PHONY : dnn_model_data_parallel
-
-# fast build rule for target.
-dnn_model_data_parallel/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/dnn_model_data_parallel.dir/build.make CMakeFiles/dnn_model_data_parallel.dir/build
-.PHONY : dnn_model_data_parallel/fast
-
 src/layers/fc_layer.o: src/layers/fc_layer.cpp.o
 
 .PHONY : src/layers/fc_layer.o
@@ -201,6 +227,7 @@ src/layers/fc_layer.o: src/layers/fc_layer.cpp.o
 # target to build an object file
 src/layers/fc_layer.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/liba_single_process_dnn.dir/build.make CMakeFiles/liba_single_process_dnn.dir/src/layers/fc_layer.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/liba_single_process_rnn.dir/build.make CMakeFiles/liba_single_process_rnn.dir/src/layers/fc_layer.cpp.o
 .PHONY : src/layers/fc_layer.cpp.o
 
 src/layers/fc_layer.i: src/layers/fc_layer.cpp.i
@@ -210,6 +237,7 @@ src/layers/fc_layer.i: src/layers/fc_layer.cpp.i
 # target to preprocess a source file
 src/layers/fc_layer.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/liba_single_process_dnn.dir/build.make CMakeFiles/liba_single_process_dnn.dir/src/layers/fc_layer.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/liba_single_process_rnn.dir/build.make CMakeFiles/liba_single_process_rnn.dir/src/layers/fc_layer.cpp.i
 .PHONY : src/layers/fc_layer.cpp.i
 
 src/layers/fc_layer.s: src/layers/fc_layer.cpp.s
@@ -219,6 +247,7 @@ src/layers/fc_layer.s: src/layers/fc_layer.cpp.s
 # target to generate assembly for a file
 src/layers/fc_layer.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/liba_single_process_dnn.dir/build.make CMakeFiles/liba_single_process_dnn.dir/src/layers/fc_layer.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/liba_single_process_rnn.dir/build.make CMakeFiles/liba_single_process_rnn.dir/src/layers/fc_layer.cpp.s
 .PHONY : src/layers/fc_layer.cpp.s
 
 src/main_data_parallel.o: src/main_data_parallel.cpp.o
@@ -247,6 +276,33 @@ src/main_data_parallel.s: src/main_data_parallel.cpp.s
 src/main_data_parallel.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/dnn_model_data_parallel.dir/build.make CMakeFiles/dnn_model_data_parallel.dir/src/main_data_parallel.cpp.s
 .PHONY : src/main_data_parallel.cpp.s
+
+src/main_rnn_model.o: src/main_rnn_model.cpp.o
+
+.PHONY : src/main_rnn_model.o
+
+# target to build an object file
+src/main_rnn_model.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dnn_model_rnn.dir/build.make CMakeFiles/dnn_model_rnn.dir/src/main_rnn_model.cpp.o
+.PHONY : src/main_rnn_model.cpp.o
+
+src/main_rnn_model.i: src/main_rnn_model.cpp.i
+
+.PHONY : src/main_rnn_model.i
+
+# target to preprocess a source file
+src/main_rnn_model.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dnn_model_rnn.dir/build.make CMakeFiles/dnn_model_rnn.dir/src/main_rnn_model.cpp.i
+.PHONY : src/main_rnn_model.cpp.i
+
+src/main_rnn_model.s: src/main_rnn_model.cpp.s
+
+.PHONY : src/main_rnn_model.s
+
+# target to generate assembly for a file
+src/main_rnn_model.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dnn_model_rnn.dir/build.make CMakeFiles/dnn_model_rnn.dir/src/main_rnn_model.cpp.s
+.PHONY : src/main_rnn_model.cpp.s
 
 src/main_single_process.o: src/main_single_process.cpp.o
 
@@ -308,8 +364,9 @@ src/models/dnn_model.o: src/models/dnn_model.cpp.o
 
 # target to build an object file
 src/models/dnn_model.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/liba_mpi_dnn.dir/build.make CMakeFiles/liba_mpi_dnn.dir/src/models/dnn_model.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/liba_single_process_dnn.dir/build.make CMakeFiles/liba_single_process_dnn.dir/src/models/dnn_model.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/liba_mpi_dnn.dir/build.make CMakeFiles/liba_mpi_dnn.dir/src/models/dnn_model.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/liba_single_process_rnn.dir/build.make CMakeFiles/liba_single_process_rnn.dir/src/models/dnn_model.cpp.o
 .PHONY : src/models/dnn_model.cpp.o
 
 src/models/dnn_model.i: src/models/dnn_model.cpp.i
@@ -318,8 +375,9 @@ src/models/dnn_model.i: src/models/dnn_model.cpp.i
 
 # target to preprocess a source file
 src/models/dnn_model.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/liba_mpi_dnn.dir/build.make CMakeFiles/liba_mpi_dnn.dir/src/models/dnn_model.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/liba_single_process_dnn.dir/build.make CMakeFiles/liba_single_process_dnn.dir/src/models/dnn_model.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/liba_mpi_dnn.dir/build.make CMakeFiles/liba_mpi_dnn.dir/src/models/dnn_model.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/liba_single_process_rnn.dir/build.make CMakeFiles/liba_single_process_rnn.dir/src/models/dnn_model.cpp.i
 .PHONY : src/models/dnn_model.cpp.i
 
 src/models/dnn_model.s: src/models/dnn_model.cpp.s
@@ -328,8 +386,9 @@ src/models/dnn_model.s: src/models/dnn_model.cpp.s
 
 # target to generate assembly for a file
 src/models/dnn_model.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/liba_mpi_dnn.dir/build.make CMakeFiles/liba_mpi_dnn.dir/src/models/dnn_model.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/liba_single_process_dnn.dir/build.make CMakeFiles/liba_single_process_dnn.dir/src/models/dnn_model.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/liba_mpi_dnn.dir/build.make CMakeFiles/liba_mpi_dnn.dir/src/models/dnn_model.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/liba_single_process_rnn.dir/build.make CMakeFiles/liba_single_process_rnn.dir/src/models/dnn_model.cpp.s
 .PHONY : src/models/dnn_model.cpp.s
 
 # Help Target
@@ -342,15 +401,20 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... dnn_model_data_parallel"
 	@echo "... dnn_model_mpi"
+	@echo "... dnn_model_rnn"
 	@echo "... dnn_model_single_process"
 	@echo "... liba_mpi_dnn"
 	@echo "... liba_single_process_dnn"
+	@echo "... liba_single_process_rnn"
 	@echo "... src/layers/fc_layer.o"
 	@echo "... src/layers/fc_layer.i"
 	@echo "... src/layers/fc_layer.s"
 	@echo "... src/main_data_parallel.o"
 	@echo "... src/main_data_parallel.i"
 	@echo "... src/main_data_parallel.s"
+	@echo "... src/main_rnn_model.o"
+	@echo "... src/main_rnn_model.i"
+	@echo "... src/main_rnn_model.s"
 	@echo "... src/main_single_process.o"
 	@echo "... src/main_single_process.i"
 	@echo "... src/main_single_process.s"

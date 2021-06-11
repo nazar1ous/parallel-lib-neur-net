@@ -72,11 +72,13 @@ CMAKE_BINARY_DIR = /home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/liba_mpi_dnn.dir/all
+all: CMakeFiles/dnn_model_rnn.dir/all
+all: CMakeFiles/dnn_model_data_parallel.dir/all
 all: CMakeFiles/dnn_model_mpi.dir/all
 all: CMakeFiles/liba_single_process_dnn.dir/all
+all: CMakeFiles/liba_mpi_dnn.dir/all
+all: CMakeFiles/liba_single_process_rnn.dir/all
 all: CMakeFiles/dnn_model_single_process.dir/all
-all: CMakeFiles/dnn_model_data_parallel.dir/all
 
 .PHONY : all
 
@@ -86,40 +88,69 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/liba_mpi_dnn.dir/clean
+clean: CMakeFiles/dnn_model_rnn.dir/clean
+clean: CMakeFiles/dnn_model_data_parallel.dir/clean
 clean: CMakeFiles/dnn_model_mpi.dir/clean
 clean: CMakeFiles/liba_single_process_dnn.dir/clean
+clean: CMakeFiles/liba_mpi_dnn.dir/clean
+clean: CMakeFiles/liba_single_process_rnn.dir/clean
 clean: CMakeFiles/dnn_model_single_process.dir/clean
-clean: CMakeFiles/dnn_model_data_parallel.dir/clean
 
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/liba_mpi_dnn.dir
+# Target rules for target CMakeFiles/dnn_model_rnn.dir
 
 # All Build rule for target.
-CMakeFiles/liba_mpi_dnn.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/liba_mpi_dnn.dir/build.make CMakeFiles/liba_mpi_dnn.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/liba_mpi_dnn.dir/build.make CMakeFiles/liba_mpi_dnn.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/CMakeFiles --progress-num=7,8 "Built target liba_mpi_dnn"
-.PHONY : CMakeFiles/liba_mpi_dnn.dir/all
+CMakeFiles/dnn_model_rnn.dir/all: CMakeFiles/liba_single_process_rnn.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dnn_model_rnn.dir/build.make CMakeFiles/dnn_model_rnn.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dnn_model_rnn.dir/build.make CMakeFiles/dnn_model_rnn.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/CMakeFiles --progress-num=5,6 "Built target dnn_model_rnn"
+.PHONY : CMakeFiles/dnn_model_rnn.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/liba_mpi_dnn.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/liba_mpi_dnn.dir/all
+CMakeFiles/dnn_model_rnn.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/CMakeFiles 5
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/dnn_model_rnn.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/CMakeFiles 0
-.PHONY : CMakeFiles/liba_mpi_dnn.dir/rule
+.PHONY : CMakeFiles/dnn_model_rnn.dir/rule
 
 # Convenience name for target.
-liba_mpi_dnn: CMakeFiles/liba_mpi_dnn.dir/rule
+dnn_model_rnn: CMakeFiles/dnn_model_rnn.dir/rule
 
-.PHONY : liba_mpi_dnn
+.PHONY : dnn_model_rnn
 
 # clean rule for target.
-CMakeFiles/liba_mpi_dnn.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/liba_mpi_dnn.dir/build.make CMakeFiles/liba_mpi_dnn.dir/clean
-.PHONY : CMakeFiles/liba_mpi_dnn.dir/clean
+CMakeFiles/dnn_model_rnn.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dnn_model_rnn.dir/build.make CMakeFiles/dnn_model_rnn.dir/clean
+.PHONY : CMakeFiles/dnn_model_rnn.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/dnn_model_data_parallel.dir
+
+# All Build rule for target.
+CMakeFiles/dnn_model_data_parallel.dir/all: CMakeFiles/liba_single_process_dnn.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dnn_model_data_parallel.dir/build.make CMakeFiles/dnn_model_data_parallel.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dnn_model_data_parallel.dir/build.make CMakeFiles/dnn_model_data_parallel.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/CMakeFiles --progress-num=1,2 "Built target dnn_model_data_parallel"
+.PHONY : CMakeFiles/dnn_model_data_parallel.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/dnn_model_data_parallel.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/CMakeFiles 5
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/dnn_model_data_parallel.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/CMakeFiles 0
+.PHONY : CMakeFiles/dnn_model_data_parallel.dir/rule
+
+# Convenience name for target.
+dnn_model_data_parallel: CMakeFiles/dnn_model_data_parallel.dir/rule
+
+.PHONY : dnn_model_data_parallel
+
+# clean rule for target.
+CMakeFiles/dnn_model_data_parallel.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dnn_model_data_parallel.dir/build.make CMakeFiles/dnn_model_data_parallel.dir/clean
+.PHONY : CMakeFiles/dnn_model_data_parallel.dir/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/dnn_model_mpi.dir
@@ -155,7 +186,7 @@ CMakeFiles/dnn_model_mpi.dir/clean:
 CMakeFiles/liba_single_process_dnn.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/liba_single_process_dnn.dir/build.make CMakeFiles/liba_single_process_dnn.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/liba_single_process_dnn.dir/build.make CMakeFiles/liba_single_process_dnn.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/CMakeFiles --progress-num=9,10,11 "Built target liba_single_process_dnn"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/CMakeFiles --progress-num=11,12,13 "Built target liba_single_process_dnn"
 .PHONY : CMakeFiles/liba_single_process_dnn.dir/all
 
 # Build rule for subdir invocation for target.
@@ -176,13 +207,67 @@ CMakeFiles/liba_single_process_dnn.dir/clean:
 .PHONY : CMakeFiles/liba_single_process_dnn.dir/clean
 
 #=============================================================================
+# Target rules for target CMakeFiles/liba_mpi_dnn.dir
+
+# All Build rule for target.
+CMakeFiles/liba_mpi_dnn.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/liba_mpi_dnn.dir/build.make CMakeFiles/liba_mpi_dnn.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/liba_mpi_dnn.dir/build.make CMakeFiles/liba_mpi_dnn.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/CMakeFiles --progress-num=9,10 "Built target liba_mpi_dnn"
+.PHONY : CMakeFiles/liba_mpi_dnn.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/liba_mpi_dnn.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/liba_mpi_dnn.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/CMakeFiles 0
+.PHONY : CMakeFiles/liba_mpi_dnn.dir/rule
+
+# Convenience name for target.
+liba_mpi_dnn: CMakeFiles/liba_mpi_dnn.dir/rule
+
+.PHONY : liba_mpi_dnn
+
+# clean rule for target.
+CMakeFiles/liba_mpi_dnn.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/liba_mpi_dnn.dir/build.make CMakeFiles/liba_mpi_dnn.dir/clean
+.PHONY : CMakeFiles/liba_mpi_dnn.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/liba_single_process_rnn.dir
+
+# All Build rule for target.
+CMakeFiles/liba_single_process_rnn.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/liba_single_process_rnn.dir/build.make CMakeFiles/liba_single_process_rnn.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/liba_single_process_rnn.dir/build.make CMakeFiles/liba_single_process_rnn.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/CMakeFiles --progress-num=14,15,16 "Built target liba_single_process_rnn"
+.PHONY : CMakeFiles/liba_single_process_rnn.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/liba_single_process_rnn.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/CMakeFiles 3
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/liba_single_process_rnn.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/CMakeFiles 0
+.PHONY : CMakeFiles/liba_single_process_rnn.dir/rule
+
+# Convenience name for target.
+liba_single_process_rnn: CMakeFiles/liba_single_process_rnn.dir/rule
+
+.PHONY : liba_single_process_rnn
+
+# clean rule for target.
+CMakeFiles/liba_single_process_rnn.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/liba_single_process_rnn.dir/build.make CMakeFiles/liba_single_process_rnn.dir/clean
+.PHONY : CMakeFiles/liba_single_process_rnn.dir/clean
+
+#=============================================================================
 # Target rules for target CMakeFiles/dnn_model_single_process.dir
 
 # All Build rule for target.
 CMakeFiles/dnn_model_single_process.dir/all: CMakeFiles/liba_single_process_dnn.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/dnn_model_single_process.dir/build.make CMakeFiles/dnn_model_single_process.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/dnn_model_single_process.dir/build.make CMakeFiles/dnn_model_single_process.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/CMakeFiles --progress-num=5,6 "Built target dnn_model_single_process"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/CMakeFiles --progress-num=7,8 "Built target dnn_model_single_process"
 .PHONY : CMakeFiles/dnn_model_single_process.dir/all
 
 # Build rule for subdir invocation for target.
@@ -201,33 +286,6 @@ dnn_model_single_process: CMakeFiles/dnn_model_single_process.dir/rule
 CMakeFiles/dnn_model_single_process.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/dnn_model_single_process.dir/build.make CMakeFiles/dnn_model_single_process.dir/clean
 .PHONY : CMakeFiles/dnn_model_single_process.dir/clean
-
-#=============================================================================
-# Target rules for target CMakeFiles/dnn_model_data_parallel.dir
-
-# All Build rule for target.
-CMakeFiles/dnn_model_data_parallel.dir/all: CMakeFiles/liba_single_process_dnn.dir/all
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/dnn_model_data_parallel.dir/build.make CMakeFiles/dnn_model_data_parallel.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/dnn_model_data_parallel.dir/build.make CMakeFiles/dnn_model_data_parallel.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/CMakeFiles --progress-num=1,2 "Built target dnn_model_data_parallel"
-.PHONY : CMakeFiles/dnn_model_data_parallel.dir/all
-
-# Build rule for subdir invocation for target.
-CMakeFiles/dnn_model_data_parallel.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/CMakeFiles 5
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/dnn_model_data_parallel.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/CMakeFiles 0
-.PHONY : CMakeFiles/dnn_model_data_parallel.dir/rule
-
-# Convenience name for target.
-dnn_model_data_parallel: CMakeFiles/dnn_model_data_parallel.dir/rule
-
-.PHONY : dnn_model_data_parallel
-
-# clean rule for target.
-CMakeFiles/dnn_model_data_parallel.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/dnn_model_data_parallel.dir/build.make CMakeFiles/dnn_model_data_parallel.dir/clean
-.PHONY : CMakeFiles/dnn_model_data_parallel.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

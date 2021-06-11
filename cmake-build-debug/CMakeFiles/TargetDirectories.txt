@@ -1,7 +1,9 @@
 /home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/CMakeFiles/liba_mpi_dnn.dir
+/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/CMakeFiles/dnn_model_rnn.dir
+/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/CMakeFiles/dnn_model_data_parallel.dir
 /home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/CMakeFiles/edit_cache.dir
 /home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/CMakeFiles/dnn_model_mpi.dir
 /home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/CMakeFiles/liba_single_process_dnn.dir
+/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/CMakeFiles/liba_mpi_dnn.dir
+/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/CMakeFiles/liba_single_process_rnn.dir
 /home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/CMakeFiles/dnn_model_single_process.dir
-/home/nazariikuspys/UCU/AKS/parallel-lib-neur-net/cmake-build-debug/CMakeFiles/dnn_model_data_parallel.dir
