@@ -1,0 +1,6 @@
+/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/CMakeFiles/liba_mpi_dnn.dir
+/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/CMakeFiles/dnn_model_single_process.dir
+/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/CMakeFiles/liba_single_process_dnn.dir
+/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/CMakeFiles/dnn_model_mpi.dir

@@ -1,0 +1,7 @@
+/opt/clion-2021.1.2/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/dlutchyn/Documents/UCU/parallel-lib-neur-net
+
+Consider using PVS-Studio with `-DENABLE_PVS_STUDIO=ON` flag or Windows GUI application.
+
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug

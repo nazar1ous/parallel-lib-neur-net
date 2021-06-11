@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="parallel_neural_net_lib"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\..\;CMake Files\..\..\..\..\..\usr\;CMake Files\..\..\..\..\..\usr\lib\;CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\;CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\;CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Boost-1.71.0\;CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\boost_headers-1.71.0\;CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\boost_program_options-1.71.0\;CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\boost_mpi-1.71.0\;CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\boost_serialization-1.71.0\;CMake Files\cmake\;CMake Files\cmake\defaults\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="liba_mpi_dnn">
+				<Option output="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/libliba_mpi_dnn.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DBOOST_ALL_NO_LIB"/>
+					<Add directory="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/inc/eigen-3.3.9"/>
+					<Add directory="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/inc"/>
+					<Add directory="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/src"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/openmpi/include"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 liba_mpi_dnn"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="liba_mpi_dnn/fast">
+				<Option output="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/libliba_mpi_dnn.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DBOOST_ALL_NO_LIB"/>
+					<Add directory="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/inc/eigen-3.3.9"/>
+					<Add directory="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/inc"/>
+					<Add directory="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/src"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/openmpi/include"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 liba_mpi_dnn/fast"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="dnn_model_single_process">
+				<Option output="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/dnn_model_single_process" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include"/>
+					<Add directory="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/inc/eigen-3.3.9"/>
+					<Add directory="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/inc"/>
+					<Add directory="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/src"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/openmpi/include"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 dnn_model_single_process"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="dnn_model_single_process/fast">
+				<Option output="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/dnn_model_single_process" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include"/>
+					<Add directory="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/inc/eigen-3.3.9"/>
+					<Add directory="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/inc"/>
+					<Add directory="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/src"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/openmpi/include"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 dnn_model_single_process/fast"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="liba_single_process_dnn">
+				<Option output="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/libliba_single_process_dnn.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include"/>
+					<Add directory="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/inc/eigen-3.3.9"/>
+					<Add directory="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/inc"/>
+					<Add directory="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/src"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/openmpi/include"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 liba_single_process_dnn"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="liba_single_process_dnn/fast">
+				<Option output="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/libliba_single_process_dnn.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include"/>
+					<Add directory="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/inc/eigen-3.3.9"/>
+					<Add directory="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/inc"/>
+					<Add directory="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/src"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/openmpi/include"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 liba_single_process_dnn/fast"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="dnn_model_mpi">
+				<Option output="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/dnn_model_mpi" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DBOOST_ALL_NO_LIB"/>
+					<Add directory="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/inc/eigen-3.3.9"/>
+					<Add directory="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/inc"/>
+					<Add directory="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/src"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/openmpi/include"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 dnn_model_mpi"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="dnn_model_mpi/fast">
+				<Option output="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/dnn_model_mpi" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DBOOST_ALL_NO_LIB"/>
+					<Add directory="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/inc/eigen-3.3.9"/>
+					<Add directory="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/inc"/>
+					<Add directory="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/src"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/openmpi/include"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 dnn_model_mpi/fast"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/inc/layers/activations.h">
+			<Option target="liba_single_process_dnn"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/inc/layers/config.h">
+			<Option target="liba_mpi_dnn"/>
+			<Option target="liba_single_process_dnn"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/inc/layers/fc_layer.h">
+			<Option target="liba_single_process_dnn"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/inc/layers/loss.h">
+			<Option target="liba_single_process_dnn"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/inc/layers/optimizers.h">
+			<Option target="liba_single_process_dnn"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/inc/layers/rec_layer.h">
+			<Option target="liba_single_process_dnn"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/inc/models/dnn_model.h">
+			<Option target="liba_single_process_dnn"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/inc/models/rnn_model.h">
+			<Option target="liba_single_process_dnn"/>
+			<Option target="dnn_model_mpi"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/inc/mpi/acivations_mpi.h">
+			<Option target="liba_mpi_dnn"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/inc/mpi/fc_layer_mpi.h">
+			<Option target="liba_mpi_dnn"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/inc/mpi/loss_mpi.h">
+			<Option target="liba_mpi_dnn"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/inc/mpi/optimizers_mpi.h">
+			<Option target="liba_mpi_dnn"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/inc/mpi/serialization_config.h">
+			<Option target="liba_mpi_dnn"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/inc/process_data/process_data.h">
+			<Option target="liba_mpi_dnn"/>
+			<Option target="liba_single_process_dnn"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/src/layers/fc_layer.cpp">
+			<Option target="liba_single_process_dnn"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/src/main_single_process.cpp">
+			<Option target="dnn_model_single_process"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/src/main_tutorial_mpi.cpp">
+			<Option target="dnn_model_mpi"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/src/models/dnn_model.cpp">
+			<Option target="liba_mpi_dnn"/>
+			<Option target="liba_single_process_dnn"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/../../../../../usr/lib/x86_64-linux-gnu/cmake/BoostDetectToolset-1.71.0.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/../../../../../usr/lib/x86_64-linux-gnu/cmake/Boost-1.71.0/BoostConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Boost-1.71.0\"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/../../../../../usr/lib/x86_64-linux-gnu/cmake/Boost-1.71.0/BoostConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\Boost-1.71.0\"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/../../../../../usr/lib/x86_64-linux-gnu/cmake/boost_headers-1.71.0/boost_headers-config-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\boost_headers-1.71.0\"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/../../../../../usr/lib/x86_64-linux-gnu/cmake/boost_headers-1.71.0/boost_headers-config.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\boost_headers-1.71.0\"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/../../../../../usr/lib/x86_64-linux-gnu/cmake/boost_program_options-1.71.0/boost_program_options-config-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\boost_program_options-1.71.0\"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/../../../../../usr/lib/x86_64-linux-gnu/cmake/boost_program_options-1.71.0/boost_program_options-config.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\boost_program_options-1.71.0\"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/../../../../../usr/lib/x86_64-linux-gnu/cmake/boost_program_options-1.71.0/libboost_program_options-variant-shared.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\boost_program_options-1.71.0\"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/../../../../../usr/lib/x86_64-linux-gnu/cmake/boost_program_options-1.71.0/libboost_program_options-variant-static.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\boost_program_options-1.71.0\"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/../../../../../usr/lib/x86_64-linux-gnu/cmake/boost_mpi-1.71.0/boost_mpi-config-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\boost_mpi-1.71.0\"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/../../../../../usr/lib/x86_64-linux-gnu/cmake/boost_mpi-1.71.0/boost_mpi-config.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\boost_mpi-1.71.0\"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/../../../../../usr/lib/x86_64-linux-gnu/cmake/boost_mpi-1.71.0/libboost_mpi-variant-shared.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\boost_mpi-1.71.0\"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/../../../../../usr/lib/x86_64-linux-gnu/cmake/boost_mpi-1.71.0/libboost_mpi-variant-static.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\boost_mpi-1.71.0\"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/../../../../../usr/lib/x86_64-linux-gnu/cmake/boost_serialization-1.71.0/boost_serialization-config-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\boost_serialization-1.71.0\"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/../../../../../usr/lib/x86_64-linux-gnu/cmake/boost_serialization-1.71.0/boost_serialization-config.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\boost_serialization-1.71.0\"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/../../../../../usr/lib/x86_64-linux-gnu/cmake/boost_serialization-1.71.0/libboost_serialization-variant-shared.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\boost_serialization-1.71.0\"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/../../../../../usr/lib/x86_64-linux-gnu/cmake/boost_serialization-1.71.0/libboost_serialization-variant-static.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\boost_serialization-1.71.0\"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake/Config.cmake">
+			<Option virtualFolder="CMake Files\cmake\"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake/defaults/CompilerWarnings.cmake">
+			<Option virtualFolder="CMake Files\cmake\defaults\"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake/defaults/Conan.cmake">
+			<Option virtualFolder="CMake Files\cmake\defaults\"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake/defaults/Errors.cmake">
+			<Option virtualFolder="CMake Files\cmake\defaults\"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake/defaults/PVSStudio.cmake">
+			<Option virtualFolder="CMake Files\cmake\defaults\"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake/defaults/Sanitizers.cmake">
+			<Option virtualFolder="CMake Files\cmake\defaults\"/>
+		</Unit>
+		<Unit filename="/home/dlutchyn/Documents/UCU/parallel-lib-neur-net/cmake/defaults/Windows.cmake">
+			<Option virtualFolder="CMake Files\cmake\defaults\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
