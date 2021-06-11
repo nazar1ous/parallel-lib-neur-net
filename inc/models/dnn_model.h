@@ -129,7 +129,9 @@ public:
     // usage too much memory(each instance of a model has a cache)
     void fit_data_parallel(const md& X_train, const md& Y_train,
                            int epochs=100, bool verbose=false,
-                           int batch_size=32){
+                           int batch_size=32,
+                           int threads_n=1){
+
         if (optimizer->type != "sgd"){
             std::cerr << "To use data parallelization, you have to use SGD" << std::endl;
             exit(1);
@@ -147,7 +149,8 @@ public:
             md AL;
             md Y;
 
-            #pragma omp parallel for
+            omp_set_num_threads(threads_n);
+            #pragma omp parallel for default(none) shared(batches_n, data_split_, caches, Y, AL)
             for (int b = 0; b < batches_n; ++b){
                 md X = data_split_[b].first;
                 Y = data_split_[b].second;

@@ -2,6 +2,7 @@
 #include <fstream>
 #include "models/dnn_model.h"
 #include "process_data/process_data.h"
+#include "time_counting/time_counting.h"
 
 
 int main(int argc, char **argv) {
@@ -10,6 +11,7 @@ int main(int argc, char **argv) {
     auto X_test = data[1];
     auto Y_train = data[2];
     auto Y_test = data[3];
+
 
     auto l1 = new FCLayer(X_train.rows(), 10, "linear", "he", 1);
     auto l2 = new FCLayer(10, 20, "tanh", "he",1);
@@ -24,8 +26,15 @@ int main(int argc, char **argv) {
     auto op = new SGD(0.01);
     auto loss = new BinaryCrossEntropy();
     model->compile(loss, op);
-    model->fit(X_train, Y_train, 10, true, Y_train.cols());
+
+    int THREADS_NUM = 1;
+    auto start_time = time_counting::get_current_time_fenced();
+
+    model->fit_data_parallel(X_train, Y_train, 2, true, Y_train.cols(), THREADS_NUM);
+    auto res_time = time_counting::to_us(time_counting::get_current_time_fenced()-start_time);
     auto res = model->evaluate(X_test, Y_test);
     std::cout << "Test accuracy = " << std::to_string(res) << std::endl;
+    std::cout << "Training time = " << std::to_string(res_time) << "; THREADS_NUM = "
+    << std::to_string(THREADS_NUM) << std::endl;
 
 }
